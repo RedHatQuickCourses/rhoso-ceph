@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Create storage pool :: Placeholder Course Title</title>
+    <link rel="prev" href="section5.html">
+    <link rel="next" href="../chapter2/index.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Placeholder Course Title</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/changeme/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="placeholder-course-name" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Placeholder Course Title</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Ceph Storage Cluster Deployment</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section1.html">Verify lab environment connectivity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section2.html">Install packages</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section3.html">Configuration files on the deployment server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section4.html">Deploy the Ceph storage cluster</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section5.html">Verify deployed cluster</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="section6.html">Create storage pool</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chapter2/index.html">Chapter 2</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section1.html">Section 1</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chapter3/index.html">Chapter 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter3/section1.html">Section 1</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter3/section2.html">Section 2</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix A</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Placeholder Course Title</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Placeholder Course Title</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Placeholder Course Title</a></li>
+    <li><a href="index.html">Ceph Storage Cluster Deployment</a></li>
+    <li><a href="section6.html">Create storage pool</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Create storage pool</h1>
+<div class="paragraph">
+<p>On this page, we are going to create a storage pool on the ceph cluster and mount it on the client.
+We are using the utility VM as client to test and verify the ceph storage cluster functionality.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Login to <code>utility</code> VM as root user and execute below commands to install <code>ceph-common</code> package for client side utilities.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mv /etc/yum.repos.d/rhel_dvd.repo /tmp/
+rpm -e katello-ca-consumer-satellite-dle.ole.redhat.com
+subscription-manager register
+subscription-manager repos --disable=*
+subscription-manager repos --enable=rhel-9-for-x86_64-baseos-rpms --enable=rhel-9-for-x86_64-appstream-rpms --enable=rhceph-7-tools-for-rhel-9-x86_64-rpms
+dnf -y install chrony ceph-common</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Login to <code>cephservera</code> VM as <code>root</code> user.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ssh root@cephservera</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a test storage pool on your cluster.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ceph osd pool create test_pool 32 32</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above command creates a replicated pool called <code>test_pool</code> with 32 placement groups.</p>
+</div>
+<div class="listingblock">
+<div class="title">Sample Output</div>
+<div class="content">
+<pre>pool 'test_pool' created</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Initialize the pool.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rbd pool init test_pool</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Above command sets the application type for the pool to <code>rbd</code>.</p>
+</div>
+</li>
+<li>
+<p>List the pools to verify <code>test_pool</code> is created.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ceph osd lspools</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample Output</div>
+<div class="content">
+<pre>1 .mgr
+2 .rgw.root
+3 default.rgw.log
+4 default.rgw.control
+5 default.rgw.meta
+6 test_pool</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Check output of <code>ceph df</code> command to list the configured pools and view the usage and availability for test_pool.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ceph df</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample Output</div>
+<div class="content">
+<pre>--- RAW STORAGE ---
+CLASS     SIZE    AVAIL     USED  RAW USED  %RAW USED
+hdd    200 GiB  199 GiB  1.3 GiB   1.3 GiB       0.66
+TOTAL  200 GiB  199 GiB  1.3 GiB   1.3 GiB       0.66
+
+--- POOLS ---
+POOL                 ID  PGS   STORED  OBJECTS     USED  %USED  MAX AVAIL
+.mgr                  1    1  598 KiB        2  1.8 MiB      0     63 GiB
+.rgw.root             2   32  1.4 KiB        4   48 KiB      0     63 GiB
+default.rgw.log       3   32  3.7 KiB      177  412 KiB      0     63 GiB
+default.rgw.control   4   32      0 B        8      0 B      0     63 GiB
+default.rgw.meta      5   32    382 B        2   24 KiB      0     63 GiB
+test_pool             6   32     19 B        1   12 KiB      0     63 GiB</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The ID of test_pool might be different in your lab environment.</p>
+</div>
+</li>
+<li>
+<p>Create a dedicated Ceph user (client.test_pool.utility) for the client.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ceph auth get-or-create client.test_pool.utility mon 'profile rbd' osd 'profile rbd' -o /etc/ceph/ceph.client.test_pool.utility.keyring</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We are using the utility VM as client to test and verify the ceph storage cluster deployment.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Display the new file created.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat /etc/ceph/ceph.client.test_pool.utility.keyring</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify that the <code>client.test_pool.utility</code> user now exists.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ceph auth get client.test_pool.utility</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Copy the Ceph configuration and the key-ring files from the <code>/etc/ceph/</code> directory on the <code>cephservera</code> node to the <code>/etc/ceph/</code> directory on the <code>utility</code> node.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">scp  /etc/ceph/{ceph.conf,ceph.client.test_pool.utility.keyring} root@utility:/etc/ceph/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Login to the client system and temporarily set the default user ID used for connections to the cluster to <code>test_pool.utility</code>.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export CEPH_ARGS='--id=test_pool.utility'</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify that you can connect to the cluster.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rbd ls test_pool</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a new RADOS Block Device (RBD) image of size 128 megabytes.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rbd create test_pool/test --size=128M</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify the image is successfully created under the pool.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rbd ls test_pool</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify the parameters of the RBD image</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rbd info test_pool/test</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Map the RBD image on the utility node by using the kernel RBD client.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rbd map test_pool/test</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify that you can see the RBD image mapped on the utility node like a regular disk block device.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rbd showmapped
+lsblk</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Format the device with an XFS file system</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mkfs.xfs /dev/rbd0</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a mount point for the file system and mount the file system created on the /dev/rbd0 device.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mkdir /mnt/rbd
+mount /dev/rbd0 /mnt/rbd</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Review the file-system usage.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">df /mnt/rbd</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add some content to the file system.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">dd if=/dev/zero of=/mnt/rbd/test1 bs=10M count=1</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Review the file-system usage.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">df /mnt/rbd</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Review the content of the cluster.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ceph df</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Unmount the file system and unmap the RBD image on the utility node.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">umount /mnt/rbd
+rbd unmap /dev/rbd0
+rbd showmapped</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Reference: <a href="https://role.rhu.redhat.com/rol-rhu/app/courses/cl260-5.0/pages/ch06s02" class="bare">https://role.rhu.redhat.com/rol-rhu/app/courses/cl260-5.0/pages/ch06s02</a></p>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="section5.html">Verify deployed cluster</a></span>
+  <span class="next"><a href="../chapter2/index.html">Chapter 2</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
