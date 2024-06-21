@@ -1,3 +1,48 @@
-= Section 1
+= Verify lab environment connectivity
 
-This is _Section 1_ of _Chapter 1_ in the *hello* quick course....
+. Connect to your lab environment as `student` user on `workstation` VM and access `utility` VM from there.
++
+[source,bash,role=execute]
+----
+[student@workstation ~]$ ssh utility
+----
++
+.Sample Output
+----
+[student@utility ~]$ 
+----
+
+. From `utility` vm copy the ssh private key to `cephservera`
++
+[source,bash,role=execute]
+----
+[student@utility ~]$ scp /home/student/.ssh/lab_rsa root@cephservera:.ssh/
+----
+
+. From `utility` VM login to `cephservera` instance as `root` user.
++
+[source,bash,role=execute]
+----
+[student@utility ~]$ ssh root@cephservera
+----
+
+. Make sure you are able to login to all other Ceph cluster nodes from `cephservera` instance.
++
+[source,bash,role=execute]
+----
+[root@cephservera ~]# for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server hostname; done
+----
++
+.Sample Output
+----
+Warning: Permanently added 'cephservera' (ED25519) to the list of known hosts.
+cephservera
+Warning: Permanently added 'cephserverb' (ED25519) to the list of known hosts.
+cephserverb
+Warning: Permanently added 'cephserverc' (ED25519) to the list of known hosts.
+cephserverc
+Warning: Permanently added 'cephserverd' (ED25519) to the list of known hosts.
+cephserverd
+Warning: Permanently added 'cephservere' (ED25519) to the list of known hosts.
+cephservere
+----

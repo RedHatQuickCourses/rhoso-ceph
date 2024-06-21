@@ -1,3 +1,34 @@
-= Section 2
+= Install packages
 
-This is _Section 2_ of _Chapter 1_ in the *hello* quick course....
+. Register all your Ceph cluster nodes on Red Hat customer portal.
++
+[source,bash,role=execute]
+----
+for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server subscription-manager register --username yourusername --password yourpassword;  done
+----
++
+Replace `yourusername` and `yourpassword` in the above command with appropriate string.
++
+NOTE: You may not need to execute the above steps in Red Hat training environment where local packages repository is made available.
+
+. Subscribe the cluster nodes to required RHEL9 and Ceph channels.
++
+[source,bash,role=execute]
+----
+for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server subscription-manager repos --disable=* --enable=rhel-9-for-x86_64-baseos-rpms --enable=rhel-9-for-x86_64-appstream-rpms --enable=rhceph-7-tools-for-rhel-9-x86_64-rpms;  done
+----
+
+. Update all the Ceph cluster nodes to latest release.
++
+[source,bash,role=execute]
+----
+for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server dnf -y update; done
+----
+
+. Install the packages required for Ceph storage deployment on all the cluster nodes.
++
+[source,bash,role=execute]
+----
+for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server dnf -y install cephadm ceph-common lvm2 chrony podman; done
+----
+

@@ -1,4 +1,87 @@
-= Section 3
+= Configuration files on the deployment server
 
-This is _Section 3_ of _Chapter 1_ in the *hello* quick course....
+NOTE: We will be using `cephservera` as the deployment server.
 
+. Create `auth.json` file on your deployment server `cephservera`.
++
+[source,bash,role=execute]
+----
+vi /etc/auth.json 
+----
++
+[source,bash,role=execute]
+----
+{
+ "url":"registry.redhat.io",
+ "username":"yourusername",
+ "password":"yourpasswoed"
+}
+----
++
+Replace `yourusername` and `yourpassword` in the above command with appropriate string.
+
+. Create initial configuration file to be used for the deployment.
++
+[source,bash,role=execute]
+----
+vi initial-config.yaml
+----
++
+[source,bash,role=execute]
+----
+---
+service_type: host
+addr: 192.168.51.111
+hostname: cephservera
+---
+service_type: host
+addr: 192.168.51.112
+hostname: cephserverb
+---
+service_type: host
+addr: 192.168.51.113
+hostname: cephserverc
+---
+service_type: host
+addr: 192.168.51.114
+hostname: cephserverd
+---
+service_type: host
+addr: 192.168.51.115
+hostname: cephservere  
+---
+service_type: mon
+placement:
+  hosts:
+    - cephservera
+    - cephserverb
+    - cephserverc
+    - cephserverd
+    - cephservere
+---
+service_type: rgw
+service_id: realm.zone
+placement:
+  hosts:
+    - cephserverb
+    - cephserverc
+---
+service_type: mgr
+placement:
+  hosts:
+    - cephservera
+    - cephserverb
+    - cephserverc
+    - cephserverd
+---
+service_type: osd
+service_id: default_drive_group
+placement:
+  host_pattern: 'cephserver*'
+data_devices:
+  paths:
+    - /dev/vdb
+    - /dev/vdc
+    - /dev/vdd
+    - /dev/vde
+----

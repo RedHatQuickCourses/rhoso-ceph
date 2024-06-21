@@ -1,0 +1,61 @@
+= Deploy the Ceph storage cluster
+
+. Run below command to bootstrap your Ceph Storage Cluster.
++
+[source,bash,role=execute]
+----
+[root@servera ~]# cephadm bootstrap --apply-spec initial-config.yaml --mon-ip 192.168.51.111 --registry-json /etc/auth.json --allow-fqdn-hostname 
+----
+
+.Sample Output
+----
+Verifying podman|docker is present...                                                                                                                
+Verifying lvm2 is present...                                                                                                                         
+Verifying time synchronization is in place...                                                                                                        
+Unit chronyd.service is enabled and running                                                                                                          
+Repeating the final host check...                                                                                                                    
+podman (/usr/bin/podman) version 4.9.4 is present                                                                                                    
+systemctl is present                                                                                                                                 
+lvcreate is present                                                                                                                                  
+Unit chronyd.service is enabled and running                                                                                                          
+Host looks OK                                                                                                                                        
+Cluster fsid: ac86af9a-2fdf-11ef-8c9c-52540001326f                                                         
+
+
+__output truncated__       
+
+
+Ceph Dashboard is now available at:                                                                                                                  
+             URL: https://cephservera:8443/                                                                                                          
+            User: admin                                                                                                                              
+        Password: 0dp0n5b1a8                                                                                                                         
+                                                                                                                                                     
+__output truncated__                                                                  
+
+Enabling client.admin keyring and conf on hosts with "admin" label                                                                                   
+Applying initial-config.yaml to cluster                                                                                                              
+Added ssh key to host cephserverb at address 192.168.51.112                                                                                          
+
+__output truncated__
+
+Saving cluster configuration to /var/lib/ceph/ac86af9a-2fdf-11ef-8c9c-52540001326f/config directory
+Skipping call home integration. --enable-ibm-call-home not provided
+Enabling autotune for osd_memory_target
+You can access the Ceph CLI as following in case of multi-cluster or non-default config:
+
+        sudo /usr/sbin/cephadm shell --fsid ac86af9a-2fdf-11ef-8c9c-52540001326f -c /etc/ceph/ceph.conf -k /etc/ceph/ceph.client.admin.keyring
+
+Or, if you are only running a single cluster on this host:
+
+        sudo /usr/sbin/cephadm shell 
+
+Please consider enabling telemetry to help improve Ceph:
+
+        ceph telemetry on
+
+For more information see:
+
+        https://docs.ceph.com/en/latest/mgr/telemetry/
+
+Bootstrap complete.
+----

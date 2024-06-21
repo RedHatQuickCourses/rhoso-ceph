@@ -1,0 +1,223 @@
+= Create storage pool
+
+On this page, we are going to create a storage pool on the ceph cluster and mount it on the client.
+We are using the utility VM as client to test and verify the ceph storage cluster functionality.
+
+. Login to `utility` VM as root user and execute below commands to install `ceph-common` package for client side utilities.
++
+[source,bash,role=execute]
+----
+mv /etc/yum.repos.d/rhel_dvd.repo /tmp/
+rpm -e katello-ca-consumer-satellite-dle.ole.redhat.com
+subscription-manager register
+subscription-manager repos --disable=*
+subscription-manager repos --enable=rhel-9-for-x86_64-baseos-rpms --enable=rhel-9-for-x86_64-appstream-rpms --enable=rhceph-7-tools-for-rhel-9-x86_64-rpms
+dnf -y install chrony ceph-common
+----
+
+. Login to `cephservera` VM as `root` user.
++
+[source,bash,role=execute]
+----
+ssh root@cephservera
+----
+
+. Create a test storage pool on your cluster.
++
+[source,bash,role=execute]
+----
+ceph osd pool create test_pool 32 32
+----
++
+The above command creates a replicated pool called `test_pool` with 32 placement groups.
++
+.Sample Output
+----
+pool 'test_pool' created
+----
+
+. Initialize the pool.
++
+[source,bash,role=execute]
+----
+rbd pool init test_pool
+----
++
+Above command sets the application type for the pool to `rbd`.
+
+. List the pools to verify `test_pool` is created.
++
+[source,bash,role=execute]
+----
+ceph osd lspools
+----
++
+.Sample Output
+----
+1 .mgr
+2 .rgw.root
+3 default.rgw.log
+4 default.rgw.control
+5 default.rgw.meta
+6 test_pool
+----
+
+. Check output of `ceph df` command to list the configured pools and view the usage and availability for test_pool.
++
+[source,bash,role=execute]
+----
+ceph df
+----
++
+.Sample Output
+----
+--- RAW STORAGE ---
+CLASS     SIZE    AVAIL     USED  RAW USED  %RAW USED
+hdd    200 GiB  199 GiB  1.3 GiB   1.3 GiB       0.66
+TOTAL  200 GiB  199 GiB  1.3 GiB   1.3 GiB       0.66
+ 
+--- POOLS ---
+POOL                 ID  PGS   STORED  OBJECTS     USED  %USED  MAX AVAIL
+.mgr                  1    1  598 KiB        2  1.8 MiB      0     63 GiB
+.rgw.root             2   32  1.4 KiB        4   48 KiB      0     63 GiB
+default.rgw.log       3   32  3.7 KiB      177  412 KiB      0     63 GiB
+default.rgw.control   4   32      0 B        8      0 B      0     63 GiB
+default.rgw.meta      5   32    382 B        2   24 KiB      0     63 GiB
+test_pool             6   32     19 B        1   12 KiB      0     63 GiB
+----
++
+The ID of test_pool might be different in your lab environment.
+
+. Create a dedicated Ceph user (client.test_pool.utility) for the client.
++
+[source,bash,role=execute]
+----
+ceph auth get-or-create client.test_pool.utility mon 'profile rbd' osd 'profile rbd' -o /etc/ceph/ceph.client.test_pool.utility.keyring
+----
++
+NOTE: We are using the utility VM as client to test and verify the ceph storage cluster deployment.
+
+. Display the new file created.
++
+[source,bash,role=execute]
+----
+cat /etc/ceph/ceph.client.test_pool.utility.keyring
+----
+
+. Verify that the `client.test_pool.utility` user now exists.
++
+[source,bash,role=execute]
+----
+ceph auth get client.test_pool.utility
+----
+
+. Copy the Ceph configuration and the key-ring files from the `/etc/ceph/` directory on the `cephservera` node to the `/etc/ceph/` directory on the `utility` node.
++
+[source,bash,role=execute]
+----
+scp  /etc/ceph/{ceph.conf,ceph.client.test_pool.utility.keyring} root@utility:/etc/ceph/
+----
+
+. Login to the client system and temporarily set the default user ID used for connections to the cluster to `test_pool.utility`.
++
+[source,bash,role=execute]
+----
+export CEPH_ARGS='--id=test_pool.utility'
+----
+
+. Verify that you can connect to the cluster.
++
+[source,bash,role=execute]
+----
+rbd ls test_pool
+----
+
+. Create a new RADOS Block Device (RBD) image of size 128 megabytes.
++
+[source,bash,role=execute]
+----
+rbd create test_pool/test --size=128M
+----
+
+. Verify the image is successfully created under the pool.
++
+[source,bash,role=execute]
+----
+rbd ls test_pool
+----
+
+. Verify the parameters of the RBD image
++
+[source,bash,role=execute]
+----
+rbd info test_pool/test
+----
+
+. Map the RBD image on the utility node by using the kernel RBD client.
++
+[source,bash,role=execute]
+----
+rbd map test_pool/test
+----
+
+. Verify that you can see the RBD image mapped on the utility node like a regular disk block device.
++
+[source,bash,role=execute]
+----
+rbd showmapped
+lsblk
+----
+
+. Format the device with an XFS file system
++
+[source,bash,role=execute]
+----
+mkfs.xfs /dev/rbd0
+----
+
+. Create a mount point for the file system and mount the file system created on the /dev/rbd0 device.
++
+[source,bash,role=execute]
+----
+mkdir /mnt/rbd
+mount /dev/rbd0 /mnt/rbd
+----
+
+. Review the file-system usage.
++
+[source,bash,role=execute]
+----
+df /mnt/rbd
+----
+
+. Add some content to the file system.
++
+[source,bash,role=execute]
+----
+dd if=/dev/zero of=/mnt/rbd/test1 bs=10M count=1
+----
+
+. Review the file-system usage.
++
+[source,bash,role=execute]
+----
+df /mnt/rbd
+----
+
+. Review the content of the cluster.
++
+[source,bash,role=execute]
+----
+ceph df
+----
+
+. Unmount the file system and unmap the RBD image on the utility node.
++
+[source,bash,role=execute]
+----
+umount /mnt/rbd
+rbd unmap /dev/rbd0
+rbd showmapped
+----
+
+Reference: https://role.rhu.redhat.com/rol-rhu/app/courses/cl260-5.0/pages/ch06s02
