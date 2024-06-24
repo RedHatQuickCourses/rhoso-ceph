@@ -1,5 +1,5 @@
-name: placeholder-course-name
-title: Placeholder Course Title
+name: rhoso-ceph
+title: Ceph Installation and Integration with RedHat OpenStack 18
 version: 1
 nav:
 - modules/ROOT/nav.adoc

@@ -1,5 +1,5 @@
 site:
-  title: Placeholder Course Title
+  title: Ceph Installation and Integration with RedHat OpenStack 18
   start_page: placeholder-course-name::index.adoc
 
 content:
