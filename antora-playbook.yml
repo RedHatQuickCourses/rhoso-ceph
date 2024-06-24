@@ -1,6 +1,6 @@
 site:
   title: Ceph Installation and Integration with RedHat OpenStack 18
-  start_page: placeholder-course-name::index.adoc
+  start_page: rhoso-ceph::index.adoc
 
 content:
   sources:

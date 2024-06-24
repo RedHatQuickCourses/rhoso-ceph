@@ -10,6 +10,13 @@ for server in cephservera cephserverb cephserverc cephserverd cephservere; do ss
 Replace `yourusername` and `yourpassword` in the above command with appropriate string.
 +
 NOTE: You may not need to execute the above steps in Red Hat training environment where local packages repository is made available.
++
+Delete the local repository from all the servers if you are subscribing system to RedHat customer portal.
++
+[source,bash,role=execute]
+----
+for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server rm -f /etc/yum.repos.d/rhel*; done
+----
 
 . Subscribe the cluster nodes to required RHEL9 and Ceph channels.
 +

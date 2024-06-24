@@ -118,7 +118,7 @@ ceph auth get client.test_pool.utility
 scp  /etc/ceph/{ceph.conf,ceph.client.test_pool.utility.keyring} root@utility:/etc/ceph/
 ----
 
-. Login to the client system and temporarily set the default user ID used for connections to the cluster to `test_pool.utility`.
+. Login to the client system (utility VM) as root user and temporarily set the default user ID used for connections to the cluster to `test_pool.utility`.
 +
 [source,bash,role=execute]
 ----

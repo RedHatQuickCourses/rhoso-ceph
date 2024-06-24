@@ -4,33 +4,41 @@
 +
 [source,bash,role=execute]
 ----
-[student@workstation ~]$ ssh utility
+ssh utility
 ----
 +
 .Sample Output
 ----
+[student@workstation ~]$ ssh utility
 [student@utility ~]$ 
 ----
 
-. From `utility` vm copy the ssh private key to `cephservera`
+. From `utility` vm, as `student` user, copy the ssh private key to `cephservera`
 +
 [source,bash,role=execute]
 ----
-[student@utility ~]$ scp /home/student/.ssh/lab_rsa root@cephservera:.ssh/
+scp /home/student/.ssh/lab_rsa /home/student/.ssh/config root@cephservera:.ssh/
+----
++
+.Sample Output
+----
+[student@utility ~]$ scp /home/student/.ssh/lab_rsa /home/student/.ssh/config root@cephservera:.ssh/
+lab_rsa                                                                                                            100% 1679     4.0MB/s   00:00    
+config                                                                                                             100%   64   278.0KB/s   00:00    
 ----
 
 . From `utility` VM login to `cephservera` instance as `root` user.
 +
 [source,bash,role=execute]
 ----
-[student@utility ~]$ ssh root@cephservera
+ssh root@cephservera
 ----
 
 . Make sure you are able to login to all other Ceph cluster nodes from `cephservera` instance.
 +
 [source,bash,role=execute]
 ----
-[root@cephservera ~]# for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server hostname; done
+for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server hostname; done
 ----
 +
 .Sample Output

@@ -4,9 +4,9 @@
 +
 [source,bash,role=execute]
 ----
-[root@servera ~]# cephadm bootstrap --apply-spec initial-config.yaml --mon-ip 192.168.51.111 --registry-json /etc/auth.json --allow-fqdn-hostname 
+cephadm bootstrap --apply-spec initial-config.yaml --mon-ip 192.168.51.111 --registry-json /etc/auth.json --allow-fqdn-hostname 
 ----
-
++
 .Sample Output
 ----
 Verifying podman|docker is present...                                                                                                                
@@ -59,3 +59,5 @@ For more information see:
 
 Bootstrap complete.
 ----
+
+NOTE: You may have to wait for approximately 5 to 10 minutes for all background processes for installation to complete and the cluster to be in `HEALTH_OK` state. You may track the progress with `caph -s` command.
