@@ -132,6 +132,7 @@
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ceph Installation and Integration with RedHat OpenStack 18</a></li>
@@ -169,6 +170,14 @@ You may not need to execute the above steps in Red Hat training environment wher
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Delete the local repository from all the servers if you are subscribing system to RedHat customer portal.</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server rm -f /etc/yum.repos.d/rhel*; done</code></pre>
+</div>
 </div>
 </li>
 <li>

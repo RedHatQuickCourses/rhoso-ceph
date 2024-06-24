@@ -132,6 +132,7 @@
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ceph Installation and Integration with RedHat OpenStack 18</a></li>
@@ -152,11 +153,8 @@
 <p>Run below command to bootstrap your Ceph Storage Cluster.</p>
 <div class="listingblock execute">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@servera ~]# cephadm bootstrap --apply-spec initial-config.yaml --mon-ip 192.168.51.111 --registry-json /etc/auth.json --allow-fqdn-hostname</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cephadm bootstrap --apply-spec initial-config.yaml --mon-ip 192.168.51.111 --registry-json /etc/auth.json --allow-fqdn-hostname</code></pre>
 </div>
-</div>
-</li>
-</ol>
 </div>
 <div class="listingblock">
 <div class="title">Sample Output</div>
@@ -211,6 +209,21 @@ For more information see:
 
 Bootstrap complete.</pre>
 </div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You may have to wait for approximately 5 to 10 minutes for all background processes for installation to complete and the cluster to be in <code>HEALTH_OK</code> state. You may track the progress with <code>caph -s</code> command.
+</td>
+</tr>
+</table>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="section3.html">Configuration files on the deployment server</a></span>

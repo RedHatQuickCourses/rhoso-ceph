@@ -132,6 +132,7 @@
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ceph Installation and Integration with RedHat OpenStack 18</a></li>
@@ -152,21 +153,30 @@
 <p>Connect to your lab environment as <code>student</code> user on <code>workstation</code> VM and access <code>utility</code> VM from there.</p>
 <div class="listingblock execute">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[student@workstation ~]$ ssh utility</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ssh utility</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Sample Output</div>
 <div class="content">
-<pre>[student@utility ~]$</pre>
+<pre>[student@workstation ~]$ ssh utility
+[student@utility ~]$</pre>
 </div>
 </div>
 </li>
 <li>
-<p>From <code>utility</code> vm copy the ssh private key to <code>cephservera</code></p>
+<p>From <code>utility</code> vm, as <code>student</code> user, copy the ssh private key to <code>cephservera</code></p>
 <div class="listingblock execute">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[student@utility ~]$ scp /home/student/.ssh/lab_rsa root@cephservera:.ssh/</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">scp /home/student/.ssh/lab_rsa /home/student/.ssh/config root@cephservera:.ssh/</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample Output</div>
+<div class="content">
+<pre>[student@utility ~]$ scp /home/student/.ssh/lab_rsa /home/student/.ssh/config root@cephservera:.ssh/
+lab_rsa                                                                                                            100% 1679     4.0MB/s   00:00
+config                                                                                                             100%   64   278.0KB/s   00:00</pre>
 </div>
 </div>
 </li>
@@ -174,7 +184,7 @@
 <p>From <code>utility</code> VM login to <code>cephservera</code> instance as <code>root</code> user.</p>
 <div class="listingblock execute">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[student@utility ~]$ ssh root@cephservera</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ssh root@cephservera</code></pre>
 </div>
 </div>
 </li>
@@ -182,7 +192,7 @@
 <p>Make sure you are able to login to all other Ceph cluster nodes from <code>cephservera</code> instance.</p>
 <div class="listingblock execute">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@cephservera ~]# for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server hostname; done</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server hostname; done</code></pre>
 </div>
 </div>
 <div class="listingblock">
