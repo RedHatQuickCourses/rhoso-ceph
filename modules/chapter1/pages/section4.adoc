@@ -4,7 +4,7 @@
 +
 [source,bash,role=execute]
 ----
-cephadm bootstrap --apply-spec initial-config.yaml --mon-ip 192.168.51.111 --registry-json /etc/auth.json --allow-fqdn-hostname 
+cephadm bootstrap --apply-spec initial-config.yaml --mon-ip 192.168.51.211 --registry-json /etc/auth.json --allow-fqdn-hostname 
 ----
 +
 .Sample Output
@@ -34,7 +34,7 @@ __output truncated__
 
 Enabling client.admin keyring and conf on hosts with "admin" label                                                                                   
 Applying initial-config.yaml to cluster                                                                                                              
-Added ssh key to host cephserverb at address 192.168.51.112                                                                                          
+Added ssh key to host cephserverb at address 192.168.51.212                                                                                          
 
 __output truncated__
 
@@ -60,4 +60,4 @@ For more information see:
 Bootstrap complete.
 ----
 
-NOTE: You may have to wait for approximately 5 to 10 minutes for all background processes for installation to complete and the cluster to be in `HEALTH_OK` state. You may track the progress with `caph -s` command.
+NOTE: You may have to wait for approximately 5 to 10 minutes for all background processes for installation to complete and the cluster to be in *HEALTH_OK* state. You may track the progress with *watch caph -s* command.

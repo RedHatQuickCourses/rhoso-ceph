@@ -1,0 +1,28 @@
+= Storage class installation
+
+. Expand *Storage* option on right of the page and select *StorageClasses* option under it and click on *Create StorageClass* button on top right.
++
+image::ocp-odf-sc.png[]
+
+. On the next page, create storage class with options as below:
++
+Name: *ocs-external-storagecluster-ceph-images* 
++
+Provisioner: *openshift-storage.rbd.csi.ceph.com*
++
+Storage Pool: *images*
++
+Keep all other options as default.
++
+image::ocp-odf-images.png[]
+
+. Follow the same process as above to create another storage class with options:
++
+Name: *ocs-external-storagecluster-ceph-vms* 
++
+Provisioner: *openshift-storage.rbd.csi.ceph.com*
++
+Storage Pool: *vms*
++
+Keep all other options as default.
+

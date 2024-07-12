@@ -1,0 +1,30 @@
+= Deploy OpenStack control plane and verify the installation
+
+. Deploy OpenStack control plane by applying `osp-ng-ctlplane-deploy-ceph.yaml` file.
++
+[source,bash,role=execute]
+----
+oc apply -f osp-ng-ctlplane-deploy-ceph.yaml
+----
+
+. Track progress of control plane deployment
++
+[source,bash,role=execute]
+----
+watch oc get pods
+----
+
+. Verify deployment is successful
++
+[source,bash,role=execute]
+----
+oc get openstackcontrolplanes
+----
++
+.Sample output
+----
+[lab@utility rht]$ oc get openstackcontrolplanes
+NAME                                 STATUS   MESSAGE
+openstack-galera-network-isolation   True     Setup complete
+[lab@utility rht]$ 
+----

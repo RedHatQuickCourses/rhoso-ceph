@@ -1,3 +1,271 @@
-= Section 1
+= Verify your RHOSP18 and Ceph Storage cluster deployment
 
-This is _Section 1_ of _Chapter 2_ in the *hello* quick course....
+. Login to the `utility` VM and switch to `lab` user.
++
+[source,bash,role=execute]
+----
+ssh utility
+----
++
+[source,bash,role=execute]
+----
+sudo su - lab
+----
++
+When prompted, provide the password for the student user as `student`
++
+.Sample output
+----
+[student@workstation ~]$ ssh utility
+__output trimmed__
+[student@utility ~]$ 
+[student@utility ~]$ sudo su - lab
+[sudo] password for student: 
+Last login: Wed Jun 26 11:37:44 EDT 2024 from 172.25.250.254 on pts/3
+[lab@utility ~]$ 
+----
+
+. Enable tab completion for `oc` command for convenience of use.
++
+[source,bash,role=execute]
+----
+oc completion bash > /tmp/oc
+sudo cp /tmp/oc /etc/bash_completion.d/
+source /etc/bash_completion.d/oc 
+----
+
+. Verify deployment status of OpenStack controlplane.
++
+[source,bash,role=execute]
+----
+oc get -n openstack openstackcontrolplanes
+----
++
+.Sample output
+----
+[lab@utility ~]$ oc get -n openstack openstackcontrolplanes
+NAME                                 STATUS   MESSAGE
+openstack-galera-network-isolation   True     Setup complete
+----
+
+. Verify deployment status of OpenStack dataplane
++
+[source,bash,role=execute]
+----
+oc get -n openstack openstackdataplanedeployments
+----
++
+.Sample output
+----
+[lab@utility ~]$ oc get -n openstack openstackdataplanedeployments
+NAME                  NODESETS                  STATUS   MESSAGE
+openstack-edpm-ipam   ["openstack-edpm-ipam"]   True     Setup complete
+[lab@utility ~]$ 
+----
+
+. Check the storage class being used by the existing persistent volume claims.
++
+[source,bash,role=execute]
+----
+for pvc in `oc get pvc -o NAME`; do  oc get $pvc -o custom-columns=NAME:.metadata.name,STORAGECLASS:.spec.storageClassName; done
+----
++
+.Sample output
+----
+[lab@utility ~]$ for pvc in `oc get pvc -o NAME`; do  oc get $pvc -o custom-columns=NAME:.metadata.name,STORAGECLASS:.spec.storageClassName; done
+NAME                             STORAGECLASS
+glance-glance-default-single-0   nfs
+NAME                                STORAGECLASS
+mysql-db-openstack-cell1-galera-0   nfs-storage
+NAME                          STORAGECLASS
+mysql-db-openstack-galera-0   nfs-storage
+NAME                                       STORAGECLASS
+ovndbcluster-nb-etc-ovn-ovsdbserver-nb-0   nfs-storage
+NAME                                       STORAGECLASS
+ovndbcluster-sb-etc-ovn-ovsdbserver-sb-0   nfs-storage
+NAME                                  STORAGECLASS
+persistence-rabbitmq-cell1-server-0   nfs-storage
+NAME                            STORAGECLASS
+persistence-rabbitmq-server-0   nfs-storage
+----
++
+Note that all the pvcs are using nfs storage class.
+
+. Access openstack client.
++
+[source,bash,role=execute]
+----
+oc rsh openstackclient
+----
++
+.Sample output
+----
+[lab@utility ~]$ oc rsh openstackclient
+sh-5.1$ 
+----
+
+. Check openstack compute service list to make sure all required services are up and running.
++
+[source,bash,role=execute]
+----
+openstack compute service list
+----
++
+.Sample output
+----
+sh-5.1$ openstack compute service list
++--------------------------------------+----------------+----------------------------+----------+---------+-------+----------------------------+
+| ID                                   | Binary         | Host                       | Zone     | Status  | State | Updated At                 |
++--------------------------------------+----------------+----------------------------+----------+---------+-------+----------------------------+
+| 323e5a53-17d2-4d15-aaf4-ac771426256f | nova-conductor | nova-cell0-conductor-0     | internal | enabled | up    | 2024-07-10T16:16:24.000000 |
+| a43a93ed-1c81-47ee-b8ee-7a13a293df46 | nova-scheduler | nova-scheduler-0           | internal | enabled | up    | 2024-07-10T16:16:25.000000 |
+| 286eca12-36e0-4fc6-a2a4-21afbe2ad6c6 | nova-conductor | nova-cell1-conductor-0     | internal | enabled | up    | 2024-07-10T16:16:25.000000 |
+| a5242fc4-48d3-4afb-a586-f08b55460d2c | nova-compute   | compute01.ocp4.example.com | nova     | enabled | up    | 2024-07-10T16:16:26.000000 |
+| 4c2bcee4-fccb-4b5c-9ab2-5f5397cf8022 | nova-compute   | compute02.ocp4.example.com | nova     | enabled | up    | 2024-07-10T16:16:29.000000 |
++--------------------------------------+----------------+----------------------------+----------+---------+-------+----------------------------+
+----
+
+. Check hypervisor list and verify compute nodes are recognised there.
++
+[source,bash,role=execute]
+----
+openstack hypervisor list
+----
++
+.Sample output
+----
+sh-5.1$ openstack hypervisor list
++--------------------------------------+---------------------------+-----------------+--------------+-------+
+| ID                                   | Hypervisor Hostname       | Hypervisor Type | Host IP      | State |
++--------------------------------------+---------------------------+-----------------+--------------+-------+
+| e4cb88d4-4457-47e2-93de-7b89db3d65fa | compute01.srv.example.com | QEMU            | 172.22.0.110 | up    |
+| b1ead9bc-7a3e-4ebf-baff-db0ced1626aa | compute02.srv.example.com | QEMU            | 172.22.0.111 | up    |
++--------------------------------------+---------------------------+-----------------+--------------+-------+
+----
+
+. Check openstack network agent list and verify its status.
++
+[source,bash,role=execute]
+----
+openstack network agent list
+----
++
+.Sample output
+----
+sh-5.1$ openstack network agent list
++--------------------------------------+------------------------------+----------------------------+-------------------+-------+-------+----------------------------+
+| ID                                   | Agent Type                   | Host                       | Availability Zone | Alive | State | Binary                     |
++--------------------------------------+------------------------------+----------------------------+-------------------+-------+-------+----------------------------+
+| e3fceae4-b235-449a-907d-5833d1fb1c5f | OVN Controller agent         | compute02.ocp4.example.com |                   | :-)   | UP    | ovn-controller             |
+| dc835235-666f-53ae-b54d-b3b8b6171577 | OVN Metadata agent           | compute02.ocp4.example.com |                   | :-)   | UP    | neutron-ovn-metadata-agent |
+| 37854ce7-d1c3-42aa-a7f9-55a1b5c100d1 | OVN Controller agent         | compute01.ocp4.example.com |                   | :-)   | UP    | ovn-controller             |
+| 3af6cb3a-0d20-52a4-b8c8-344a38fc2eef | OVN Metadata agent           | compute01.ocp4.example.com |                   | :-)   | UP    | neutron-ovn-metadata-agent |
+| 6c2fd347-2db2-4957-8dd3-fbc05f12378a | OVN Controller Gateway agent | master02                   |                   | :-)   | UP    | ovn-controller             |
+| 8b07207e-c8b1-411a-90f4-738c36abb5ae | OVN Controller Gateway agent | master03                   |                   | :-)   | UP    | ovn-controller             |
+| 8ede615b-5466-4973-9b7d-e4766ef5e238 | OVN Controller Gateway agent | master01                   |                   | :-)   | UP    | ovn-controller             |
++--------------------------------------+------------------------------+----------------------------+-------------------+-------+-------+----------------------------+
+----
+
+. Run below set of commands to launch an instance
++
+[source,bash,role=execute]
+----
+export GATEWAY=192.168.51.254
+export PUBLIC_NETWORK_CIDR=192.168.51.0/24
+export PRIVATE_NETWORK_CIDR=192.168.100.0/24
+export PUBLIC_NET_START=192.168.51.91
+export PUBLIC_NET_END=192.168.51.99
+export DNS_SERVER=8.8.8.8
+openstack flavor create --ram 512 --disk 1 --vcpu 1 --public tiny
+curl -O -L https://github.com/cirros-dev/cirros/releases/download/0.6.2/cirros-0.6.2-x86_64-disk.img
+openstack image create cirros --container-format bare --disk-format qcow2 --public --file cirros-0.6.2-x86_64-disk.img
+openstack security group create basic
+openstack security group rule create basic --protocol tcp --dst-port 22:22 --remote-ip 0.0.0.0/0
+openstack security group rule create --protocol icmp basic
+openstack security group rule create --protocol udp --dst-port 53:53 basic
+openstack network create --external --provider-physical-network datacentre --provider-network-type flat public
+openstack network create --internal private
+openstack subnet create public-net \
+--subnet-range $PUBLIC_NETWORK_CIDR \
+--no-dhcp \
+--gateway $GATEWAY \
+--allocation-pool start=$PUBLIC_NET_START,end=$PUBLIC_NET_END \
+--network public
+openstack subnet create private-net \
+--subnet-range $PRIVATE_NETWORK_CIDR \
+--network private
+openstack router create vrouter
+openstack router set vrouter --external-gateway public
+openstack router add subnet vrouter private-net
+openstack server create \
+    --flavor tiny --network private --security-group basic \
+    --image cirros test-server
+----
+
+. Watch the stauts of the openstack instance
++
+[source,bash,role=execute]
+----
+watch openstack server list
+----
++
+.Sample output
+----
+Every 2.0s: openstack server list                                                                           openstackclient: Fri Jul 12 15:44:47 2024
+
++--------------------------------------+-------------+--------+------------------------+--------+--------+
+| ID                                   | Name        | Status | Networks               | Image  | Flavor |
++--------------------------------------+-------------+--------+------------------------+--------+--------+
+| a46bb17f-82c9-4f0e-b14b-382c30b691c6 | test-server | ACTIVE | private=192.168.100.94 | cirros | tiny   |
++--------------------------------------+-------------+--------+------------------------+--------+--------+
+----
++
+Press `Ctrl+C` to exit from watch and then run `exit` command to quit from openstackclient sessiopn.
+
+. From utility vm login to the `cephservera` vm.
++
+[source,bash,role=execute]
+----
+ssh root@cephservera
+----
+
+. Check status of the ceph server deployed in previous lab.
++
+[source,bash,role=execute]
+----
+ceph -s
+----
++
+.Sample output
+----
+[lab@utility ~]$ ssh root@cephservera
+[root@cephservera ~]# ceph -s
+  cluster:
+    id:     d7956744-3ed0-11ef-a8fc-5254000132d3
+    health: HEALTH_OK
+ 
+  services:
+    mon: 5 daemons, quorum cephservera,cephservere,cephserverc,cephserverd,cephserverb (age 2h)
+    mgr: cephservera.kiifxv(active, since 2h), standbys: cephserverd.vklfcr, cephserverb.takrdm, cephserverc.kftfon
+    osd: 20 osds: 20 up (since 2h), 20 in (since 2h)
+    rgw: 2 daemons active (2 hosts, 1 zones)
+ 
+  data:
+    pools:   6 pools, 161 pgs
+    objects: 205 objects, 17 MiB
+    usage:   1.4 GiB used, 198 GiB / 200 GiB avail
+    pgs:     161 active+clean
+
+----
++
+Make sure health is `HEALTH_OK` in the status output.
+
+. Capture the usage of ceph storage server in one file.
++
+[source,bash,role=execute]
+----
+ceph df > ceph-df.0
+----
+NOTE: We will need this file later to verify the usage of ceph storage cluster after integration with RHOSP.
+
+. Exit from `cephservera` to be back on `utility` vm.

@@ -1,0 +1,79 @@
+= Deploy OpenStack dataplane and verify its status
+
+. Create nova-custom-ceph service for openstack data plane by applying `osp-ng-nova-ceph-ansible-custom-svc.yaml` file.
++
+[source,bash,role=execute]
+----
+oc apply -f osp-ng-nova-ceph-ansible-custom-svc.yaml
+----
+
+. Create OpenStack dataplane node-set by applying `osp-ng-dataplane-node-set-deploy-ceph.yaml` file
++
+[source,bash,role=execute]
+----
+oc apply -f osp-ng-dataplane-node-set-deploy-ceph.yaml
+----
+
+. Deploy OpenStack dataplane by applying `osp-ng-dataplane-deployment.yaml` file.
++
+[source,bash,role=execute]
+----
+oc apply -f osp-ng-dataplane-deployment.yaml
+----
+
+. Check the jobs being run by the deployment process.
++
+[source,bash,role=execute]
+----
+watch oc get jobs
+----
++
+Press `Ctrl+C` to exit from the watch command.
+
+. Check the pods being run by the deployment process.
++
+[source,bash,role=execute]
+----
+watch oc get pods
+----
++
+Press `Ctrl+C` to exit from the watch command.
+
+. Verify successful completion of the dataplane deployment
++
+[source,bash,role=execute]
+----
+oc get openstackdataplanedeployments
+----
++
+.Sample output
+----
+[lab@utility rht]$ oc get openstackdataplanedeployments
+NAME                  NODESETS                  STATUS   MESSAGE
+openstack-edpm-ipam   ["openstack-edpm-ipam"]   True     Setup complete
+[lab@utility rht]$ 
+----
+
+. Discover hosts
++
+[source,bash,role=execute]
+----
+oc rsh nova-cell0-conductor-0 nova-manage cell_v2 discover_hosts --verbose
+----
++
+.Sample output
+----
+[lab@utility rht]$ oc rsh nova-cell0-conductor-0 nova-manage cell_v2 discover_hosts --verbose
+Modules with known eventlet monkey patching issues were imported prior to eventlet monkey patching: urllib3. This warning can usually be ignored if the caller is only importing and not executing nova code.
+2024-07-12 11:14:41.596 5976 WARNING oslo_policy.policy [None req-ccecbeb1-247e-422b-8d3b-82d1c5a7841b - - - - - -] JSON formatted policy_file support is deprecated since Victoria release. You need to use YAML format which will be default in future. You can use ``oslopolicy-convert-json-to-yaml`` tool to convert existing JSON-formatted policy file to YAML-formatted in backward compatible way: https://docs.openstack.org/oslo.policy/latest/cli/oslopolicy-convert-json-to-yaml.html.
+2024-07-12 11:14:41.597 5976 WARNING oslo_policy.policy [None req-ccecbeb1-247e-422b-8d3b-82d1c5a7841b - - - - - -] JSON formatted policy_file support is deprecated since Victoria release. You need to use YAML format which will be default in future. You can use ``oslopolicy-convert-json-to-yaml`` tool to convert existing JSON-formatted policy file to YAML-formatted in backward compatible way: https://docs.openstack.org/oslo.policy/latest/cli/oslopolicy-convert-json-to-yaml.html.
+Found 2 cell mappings.
+Skipping cell0 since it does not contain hosts.
+Getting computes from cell 'cell1': 8b4dc29e-cd9f-4449-8486-6336b4d35c88
+Checking host mapping for compute host 'compute01.ocp4.example.com': e4cb88d4-4457-47e2-93de-7b89db3d65fa
+Creating host mapping for compute host 'compute01.ocp4.example.com': e4cb88d4-4457-47e2-93de-7b89db3d65fa
+Checking host mapping for compute host 'compute02.ocp4.example.com': b1ead9bc-7a3e-4ebf-baff-db0ced1626aa
+Creating host mapping for compute host 'compute02.ocp4.example.com': b1ead9bc-7a3e-4ebf-baff-db0ced1626aa
+Found 2 unmapped computes in cell: 8b4dc29e-cd9f-4449-8486-6336b4d35c88
+[lab@utility rht]$ oc rsh openstackclient
+----

@@ -1,0 +1,102 @@
+= Configure the Ceph storage cluster for RHOSP storage requirements
+
+. Connect to `cephservera` as `root` user 
++
+[source,bash,role=execute]
+----
+ssh root@cephservera
+----
++
+.Sample output
+----
+[lab@utility rht]$ ssh root@cephservera
+Activate the web console with: systemctl enable --now cockpit.socket
+
+Register this system with Red Hat Insights: insights-client --register
+Create an account or view all your systems at https://red.ht/insights-dashboard
+Last login: Thu Jul 11 07:14:04 2024 from 192.168.51.254
+[root@cephservera ~]# 
+----
+
+. Create storage pools for use with RHOSP deployment
++
+[source,bash,role=execute]
+----
+for P in vms volumes images; do
+  cephadm shell -- ceph osd pool create $P;
+  cephadm shell -- ceph osd pool application enable $P rbd;
+done
+----
+
+. Create a cephx key for RHOSO to use to access pools:
++
+[source,bash,role=execute]
+----
+cephadm shell -- \
+   ceph auth add client.openstack \
+     mgr 'allow *' \
+        mon 'allow r' \
+        osd 'allow class-read object_prefix rbd_children, allow rwx pool=vms, allow rwx pool=volumes, allow rwx pool=images'
+----
+
+. Export the cephx key:
++
+[source,bash,role=execute]
+----
+cephadm shell -- ceph auth get client.openstack > /etc/ceph/ceph.client.openstack.keyring
+----
+
+. Export the configuration file:
++
+[source,bash,role=execute]
+----
+cephadm shell -- ceph config generate-minimal-conf > /etc/ceph/ceph.conf
+----
+
+. Copy the cephx key and configuration file created in the above step to utility vm. 
++
+[source,bash,role=execute]
+----
+scp /etc/ceph/ceph.conf /etc/ceph/ceph.client.openstack.keyring lab@utility:/tmp/
+----
++
+.Sample output
+----
+[root@cephservera ~]# scp /etc/ceph/ceph.conf /etc/ceph/ceph.client.openstack.keyring lab@utility:/tmp/
+ceph.conf                                                                              100%  387     1.1MB/s   00:00    
+ceph.client.openstack.keyring                                                          100%  236   604.1KB/s   00:00    
+[root@cephservera ~]# 
+----
+
+. Exit from the `cephservera` ssh session to get back to the `utility` vm.
+
+. On `utility` vm, copy the ceph configuration and keyring files from /tmp/ directory to `/etc/ceph/` directory.
++
+[source,bash,role=execute]
+----
+sudo cp /tmp/ceph.* /etc/ceph/
+----
+
+. Base64 encode these files and note the generated string
++
+[source,bash,role=execute]
+----
+KEY=$(cat /etc/ceph/ceph.client.openstack.keyring | base64 -w 0)
+CONF=$(cat /etc/ceph/ceph.conf | base64 -w 0)
+echo $KEY
+echo $CONF
+----
+
+. Edit `osp-ng-ceph-conf-files.yaml` file and replace the `ceph.client.openstack.keyring` and `ceph.conf` values with relevent strings from `$KEY` and `$CONF` respectively.
++
+[source,bash,role=execute]
+----
+osp-ng-ceph-conf-files.yaml
+----
+
+. Apply `osp-ng-ceph-conf-files.yaml` yaml file.
++
+[source,bash,role=execute]
+----
+oc apply -f osp-ng-ceph-conf-files.yaml
+----

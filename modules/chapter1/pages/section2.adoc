@@ -1,5 +1,7 @@
 = Install packages
 
+Run below commands as `root` user on `cephservera`
+
 . Register all your Ceph cluster nodes on Red Hat customer portal.
 +
 [source,bash,role=execute]
@@ -31,6 +33,8 @@ for server in cephservera cephserverb cephserverc cephserverd cephservere; do ss
 ----
 for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server dnf -y update; done
 ----
++
+NOTE: Consider running the above update command in *tmux* session.
 
 . Install the packages required for Ceph storage deployment on all the cluster nodes.
 +
@@ -39,3 +43,29 @@ for server in cephservera cephserverb cephserverc cephserverd cephservere; do ss
 for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server dnf -y install cephadm ceph-common lvm2 chrony podman; done
 ----
 
+. Reboot the ceph server storage nodes.
++
+Make sure the update and installation of packages is completed on all the nodes before rebooting.
++
+[source,bash,role=execute]
+----
+for server in cephservere cephserverd cephserverc cephserverb cephservera; do ssh $server reboot; done
+----
+
+. After a couple of minutes, try connecting again to the ceph server nodes to make sure they are rebooted successfully.
++
+[source,bash,role=execute]
+----
+for server in cephservere cephserverd cephserverc cephserverb cephservera; do ssh $server uptime; done
+----
++
+.Sample output
+----
+[student@utility ~]$ for server in cephservere cephserverd cephserverc cephserverb cephservera; do ssh $server uptime; done
+ 12:22:54 up 1 min,  0 users,  load average: 0.00, 0.00, 0.00
+ 12:22:54 up 1 min,  0 users,  load average: 0.21, 0.09, 0.03
+ 12:22:54 up 1 min,  0 users,  load average: 0.20, 0.07, 0.02
+ 12:22:54 up 1 min,  0 users,  load average: 0.03, 0.01, 0.00
+ 12:22:55 up 1 min,  0 users,  load average: 0.43, 0.09, 0.03
+[student@utility ~]$ 
+----

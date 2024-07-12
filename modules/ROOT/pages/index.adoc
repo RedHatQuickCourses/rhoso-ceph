@@ -1,6 +1,7 @@
-= An Example Quick Course
+= Ceph Installation and Integration with Red Hat OpenStack 18
 :navtitle: Home
 
 == Introduction
 
-This is an example quick course demonstrating the usage of Antora for authoring and publishing quick courses.
+This course covers step-by-step instructions for deployment of a stand alone Ceph storage cluster. 
+It also covers the hands-on lab for integration of external Ceph storage cluster with existing RHOSP18 deployment.

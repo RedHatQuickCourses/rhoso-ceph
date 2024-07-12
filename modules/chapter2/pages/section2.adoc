@@ -1,0 +1,102 @@
+= Delete Dataplane and Controlplane deployment of RHOSP18 cluster
+
+Make sure you are logged in on the `utility` vm as `lab` user.
+
+. Get the configuration files for RHOSO deployment.
++
+[source,bash,role=execute]
+----
+wget http://opentraining-na100.ole.redhat.com/rhoso-files/rhoso-files.tar.bz2
+tar xvf rhoso-files.tar.bz2
+cd ~/rhoso-files/rht/
+----
+
+. Delete existing openstack dataplane deployment.
++
+[source,bash,role=execute]
+----
+oc delete -f osp-ng-dataplane-deployment.yaml
+----
++
+.Sample output
+----
+[lab@utility rht]$ oc delete -f osp-ng-dataplane-deployment.yaml 
+openstackdataplanedeployment.dataplane.openstack.org "openstack-edpm-ipam" deleted
+----
+
+. Delete existing openstack dataplane node set.
++
+[source,bash,role=execute]
+----
+oc delete -f osp-ng-dataplane-node-set-deploy.yaml 
+----
++
+.Sample output
+----
+[lab@utility rht]$ oc delete -f osp-ng-dataplane-node-set-deploy.yaml 
+openstackdataplanenodeset.dataplane.openstack.org "openstack-edpm-ipam" deleted
+----
+
+. Watch `oc get jobs` output and see various purge jobs getting created.
++
+NOTE: You may not see all the jobs getting cleand up upon deletion of dataplane. Wait for a couple of minutes and then proceed further with the control plane deletion even if you do not see any change in the output.
+
+. Delete existing openstack controlplane deployment.
++
+[source,bash,role=execute]
+----
+oc delete -f osp-ng-ctlplane-deploy.yaml 
+----
++
+.Sample output
+----
+[lab@utility rht]$ oc delete -f osp-ng-ctlplane-deploy.yaml 
+openstackcontrolplane.core.openstack.org "openstack-galera-network-isolation" deleted
+----
+
+. Watch `oc get pods` output and see pods getting terminated.
++
+[source,bash,role=execute]
+----
+watch oc get pods
+----
++
+.Sample output
+----
+Every 2.0s: oc get pods                                                                                             utility: Fri Jul 12 13:07:41 2024
+
+NAME                                READY   STATUS        RESTARTS	 AGE
+keystone16ca-account-delete-qb596   0/1     Terminating   0          98s
+ovn-controller-k7l82                1/1     Terminating   1          16d
+ovn-controller-ovs-xtb5r            2/2     Terminating   2          16d
+----
++
+Press `Ctrl+C` to exit from the watch session.
++
+NOTE: All the pods should get cleanded up upon deletion of controlplane. Wait until all the pods are cleared before proceeding to next page for new deployment.
+
+. Get list of pvcs and delete the remaining pvcs.
++
+[source,bash,role=execute]
+----
+oc get pvc
+for pvc in `oc get pvc -o name`; do oc delete $pvc ; done
+oc get pvc
+----
++
+.Sample output
+----
+[lab@utility rht]$ oc get pvc
+NAME                                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+glance-glance-default-single-0      Bound    nfs-pv2                                    100Gi      RWO,RWX        nfs            14d
+mysql-db-openstack-cell1-galera-0   Bound    pvc-0f83ddd4-7189-4d45-87ae-e11408fc03d8   500M       RWO            nfs-storage    14d
+mysql-db-openstack-galera-0         Bound    pvc-b1cf8bf0-f7f7-49e6-b0da-0264ea43ec30   500M       RWO            nfs-storage    14d
+
+[lab@utility rht]$ for pvc in `oc get pvc -o name`; do oc delete $pvc ; done
+persistentvolumeclaim "glance-glance-default-single-0" deleted
+persistentvolumeclaim "mysql-db-openstack-cell1-galera-0" deleted
+persistentvolumeclaim "mysql-db-openstack-galera-0" deleted
+[lab@utility rht]$ oc get pvc
+No resources found in openstack namespace.
+[lab@utility rht]$ 
+----

@@ -1,3 +1,3 @@
 = Ceph Storage Cluster Deployment
 
-This chapter covers step-by-step instructions for deploying a stand alone Ceph storage cluster. At the end of this training you should be able to deploy the Ceph storage cluster in the lab environment and also access the storage from utility vm acting as client.
+This chapter covers step-by-step instructions for deploying a stand alone Ceph storage cluster. At the end of this chapter you should be able to deploy the Ceph storage cluster in the lab environment and also access the storage from utility vm acting as client.

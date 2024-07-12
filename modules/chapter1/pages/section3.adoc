@@ -1,6 +1,13 @@
 = Configuration files on the deployment server
 
-NOTE: We will be using `cephservera` as the deployment server.
+NOTE: We will be using *cephservera* as the deployment server.
+
+. Connect to `cephservera` as `root` user 
++
+[source,bash,role=execute]
+----
+ssh root@cephservera
+----
 
 . Create `auth.json` file on your deployment server `cephservera`.
 +
@@ -31,23 +38,23 @@ vi initial-config.yaml
 ----
 ---
 service_type: host
-addr: 192.168.51.111
+addr: 192.168.51.211
 hostname: cephservera
 ---
 service_type: host
-addr: 192.168.51.112
+addr: 192.168.51.212
 hostname: cephserverb
 ---
 service_type: host
-addr: 192.168.51.113
+addr: 192.168.51.213
 hostname: cephserverc
 ---
 service_type: host
-addr: 192.168.51.114
+addr: 192.168.51.214
 hostname: cephserverd
 ---
 service_type: host
-addr: 192.168.51.115
+addr: 192.168.51.215
 hostname: cephservere  
 ---
 service_type: mon

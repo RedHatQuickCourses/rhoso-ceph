@@ -1,3 +1,9 @@
 = Appendix A
 
-Content for Appendix A...
+Deploying Red Hat OpenStack Services on OpenShift
+
+https://docs.redhat.com/en/documentation/red_hat_openstack_services_on_openshift/18.0-beta/html-single/deploying_red_hat_openstack_services_on_openshift/index
+
+Configuring storage
+
+https://docs.redhat.com/en/documentation/red_hat_openstack_services_on_openshift/18.0-beta/html-single/configuring_storage/index

@@ -1,0 +1,124 @@
+= Verify RHOSO Ceph integration setup
+
+. Verify the dataplane deployment by launching instance
++
+[source,bash,role=execute]
+----
+export GATEWAY=192.168.51.254
+export PUBLIC_NETWORK_CIDR=192.168.51.0/24
+export PRIVATE_NETWORK_CIDR=192.168.100.0/24
+export PUBLIC_NET_START=192.168.51.91
+export PUBLIC_NET_END=192.168.51.99
+export DNS_SERVER=8.8.8.8
+openstack flavor create --ram 512 --disk 1 --vcpu 1 --public tiny
+curl -O -L https://github.com/cirros-dev/cirros/releases/download/0.6.2/cirros-0.6.2-x86_64-disk.img
+openstack image create cirros --container-format bare --disk-format qcow2 --public --file cirros-0.6.2-x86_64-disk.img
+openstack security group create basic
+openstack security group rule create basic --protocol tcp --dst-port 22:22 --remote-ip 0.0.0.0/0
+openstack security group rule create --protocol icmp basic
+openstack security group rule create --protocol udp --dst-port 53:53 basic
+openstack network create --external --provider-physical-network datacentre --provider-network-type flat public
+openstack network create --internal private
+openstack subnet create public-net \
+--subnet-range $PUBLIC_NETWORK_CIDR \
+--no-dhcp \
+--gateway $GATEWAY \
+--allocation-pool start=$PUBLIC_NET_START,end=$PUBLIC_NET_END \
+--network public
+openstack subnet create private-net \
+--subnet-range $PRIVATE_NETWORK_CIDR \
+--network private
+openstack router create vrouter
+openstack router set vrouter --external-gateway public
+openstack router add subnet vrouter private-net
+openstack server create \
+    --flavor tiny --network private --security-group basic \
+    --image cirros test-server
+----
+
+. Check the status of the instance to make sure it is Active.
++
+[source,bash,role=execute]
+----
+watch opensdtack server list
+----
+
+. If the instance creation fails:
+
+.. You may look for the root cause by searching for the instance uuid in logs.
++
+NOTE: A common failure observed in this lab is due to selinux preventing deletion of instance's console.log file.
++
+.Sample output
+----
+[root@compute01 ~]# podman logs nova_compute | grep 0d19bf2b-806e-4a12-a81e-170c6c89bcb9 | grep ERROR
+. . . 
+. . . 
+2024-07-12 11:17:39.631 2 ERROR nova.compute.manager [None req-795d8b7c-bedf-4f82-a8ba-023887d95263 7adc74ec29fc4f3ea8a24d84973c13f2 6e790b31b10a418ebbb8e67fc59dd023 - - default default] [instance: 0d19bf2b-806e-4a12-a81e-170c6c89bcb9] Failed to build and run instance: libvirt.libvirtError: Unable to delete file /var/lib/nova/instances/0d19bf2b-806e-4a12-a81e-170c6c89bcb9/console.log: Permission denied
+. . . 
+. . . 
+[root@compute01 ~]# grep denied /var/log/audit/audit.log
+type=AVC msg=audit(1720783057.158:18933): avc:  denied  { search } for  pid=848 comm="virtlogd" name="nova" dev="vda4" ino=8393239 scontext=system_u:system_r:virtlogd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:container_file_t:s0 tclass=dir permissive=0
+[root@compute01 ~]# 
+----
+
+.. Login to compute node as root user.
++
+[source,bash,role=execute]
+----
+ssh root@192.168.50.31
+----
+
+.. Disable selinux on the compute node to avoid the issue.
++
+[source,bash,role=execute]
+----
+setenforce 0
+----
+
+.. Follow this process on another compute node with ip `192.168.50.32`
+
+. Launch the instnace and make sure it is in *Active* state.
+
+. From `utility` vm, login to `cephservera` as `root` user.
++
+[source,bash,role=execute]
+----
+ssh root@cephservera
+----
+
+. Capture the usage of ceph storage server in one file.
++
+[source,bash,role=execute]
+----
+ceph df > ceph-df.1
+----
+NOTE: We had captured the usage earlier while verifying ceph storage cluster setup. 
+Compare the content of the two files to observe now ceph storage is being used.
+
+. Check the storage class being used by the existing persistent volume claims to make sure they are using `ocs-external-storagecluster-ceph-rbd` 
++
+[source,bash,role=execute]
+----
+for pvc in `oc get pvc -o NAME`; do  oc get $pvc -o custom-columns=NAME:.metadata.name,STORAGECLASS:.spec.storageClassName; done
+----
++
+.Sample output
+----
+[lab@utility rht]$ for pvc in `oc get pvc -o NAME`; do  oc get $pvc -o custom-columns=NAME:.metadata.name,STORAGECLASS:.spec.storageClassName; done
+NAME                             STORAGECLASS
+glance-glance-default-single-0   ocs-external-storagecluster-ceph-images
+NAME                                STORAGECLASS
+mysql-db-openstack-cell1-galera-0   ocs-external-storagecluster-ceph-rbd
+NAME                          STORAGECLASS
+mysql-db-openstack-galera-0   ocs-external-storagecluster-ceph-rbd
+NAME                                       STORAGECLASS
+ovndbcluster-nb-etc-ovn-ovsdbserver-nb-0   ocs-external-storagecluster-ceph-rbd
+NAME                                       STORAGECLASS
+ovndbcluster-sb-etc-ovn-ovsdbserver-sb-0   ocs-external-storagecluster-ceph-rbd
+NAME                                  STORAGECLASS
+persistence-rabbitmq-cell1-server-0   ocs-external-storagecluster-ceph-rbd
+NAME                            STORAGECLASS
+persistence-rabbitmq-server-0   ocs-external-storagecluster-ceph-rbd
+[lab@utility rht]$ 
+----

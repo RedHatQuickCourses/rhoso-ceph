@@ -1,0 +1,41 @@
+= Install OpenShift Data Foundation operator
+
+. Access GUI console of the `workstation` VM as `student` user.
+
+. Open terminal and login to the `utility` vm as `lab` user.
+
+. Get the kubeadmin password from `/home/lab/ocp4/auth/kubeadmin-password` file.
++
+[source,bash,role=execute]
+----
+echo $(cat /home/lab/ocp4/auth/kubeadmin-password)
+----
+
+. Select the password string and copy it.
+
+. Get the console url of your ocp cluster.
++
+[source,bash,role=execute]
+----
+oc whoami --show-console
+----
+
+. Right click on the console url and click on `Open Link` menu option.
+
+. Firefox browser will open-up with the console login page for your ocp cluster.
+
+. Provide username as `kubeadmin` and paste the password in the password field.
++
+image::ocp-console-login.png[]
+
+. Click on `Log in` button to access the RedHat OpenShift console.
+
+. On right hand side, expand `Operators` and click on `OperatorHub`.
+
+. In the search box type `odf` and click on `OpenShift Data Foundation` option in displayed search results.
++
+image::ocp-odf-operator.png[]
+
+. Click on `Install` button on top and then on the next page scroll down to click on the `Install` button at bottom.
+
+. Wait for the OpenShift Data Foundation operator to get installed.

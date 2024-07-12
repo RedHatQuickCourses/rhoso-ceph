@@ -1,0 +1,37 @@
+= Configure controlplane to use redhat ceph storage cluster
+
+Outside the gui session on terminal login to *utility* vm as *lab* user and be in the *~/rhoso-files/rht/* director to proceed further.
+
+. Extract the FSID from the Red Hat Ceph Storage secret:
++
+[source,bash,role=execute]
+----
+oc get secret ceph-conf-files -o json | jq -r '.data."ceph.conf"' | base64 -d | grep fsid | sed -e 's/fsid = //'
+----
++
+.Sample output
+----
+[lab@utility rht]$ oc get secret ceph-conf-files -o json | jq -r '.data."ceph.conf"' | base64 -d | grep fsid | sed -e 's/fsid = //'
+	4cf346e4-385c-11ef-97ad-5254000132d3
+----
+
+. Edit `osp-ng-ceph-novacompute-cm.yaml` file for ceph-nova configmap and change `rbd_secret_uuid` value with the fsid string obtained from your lab in the above command.
++
+[source,bash,role=execute]
+----
+vi osp-ng-ceph-novacompute-cm.yaml
+----
+
+. Apply the configmap settings in `osp-ng-ctlplane-deploy-ceph.yaml` file.
++
+[source,bash,role=execute]
+----
+oc apply -f osp-ng-ceph-novacompute-cm.yaml
+----
+
+. Edit `osp-ng-ctlplane-deploy-ceph.yaml` file for `OpenStackControlPlane` deployment and change `rbd_secret_uuid` value with the fsid string obtained from your lab in earlier step.
++
+[source,bash,role=execute]
+----
+vi osp-ng-ctlplane-deploy-ceph.yaml
+----

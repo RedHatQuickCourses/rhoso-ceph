@@ -3,7 +3,9 @@
 On this page, we are going to create a storage pool on the ceph cluster and mount it on the client.
 We are using the utility VM as client to test and verify the ceph storage cluster functionality.
 
-. Login to `utility` VM as root user and execute below commands to install `ceph-common` package for client side utilities.
+. Exit from the shell session on `cephservera` and login to `utility` VM as root user.
+
+. Execute below commands to install `ceph-common` package for client side utilities.
 +
 [source,bash,role=execute]
 ----
@@ -14,8 +16,10 @@ subscription-manager repos --disable=*
 subscription-manager repos --enable=rhel-9-for-x86_64-baseos-rpms --enable=rhel-9-for-x86_64-appstream-rpms --enable=rhceph-7-tools-for-rhel-9-x86_64-rpms
 dnf -y install chrony ceph-common
 ----
++
+Provide your subscription-manager login credentials when prompted.
 
-. Login to `cephservera` VM as `root` user.
+. Exit from the root session on `utility` vm and login to `cephservera` VM as `root` user.
 +
 [source,bash,role=execute]
 ----
@@ -118,7 +122,19 @@ ceph auth get client.test_pool.utility
 scp  /etc/ceph/{ceph.conf,ceph.client.test_pool.utility.keyring} root@utility:/etc/ceph/
 ----
 
-. Login to the client system (utility VM) as root user and temporarily set the default user ID used for connections to the cluster to `test_pool.utility`.
+. Login to the client system (utility VM) 
++
+.Sample output
+----
+[root@cephservera ~]# exit
+logout
+Connection to cephservera closed.
+[student@utility ~]$ sudo su -
+[sudo] password for student: 
+[root@utility ~]# 
+----
+
+. On `utility` VM as `root` user, temporarily set the default user ID used for connections to the cluster to `test_pool.utility`.
 +
 [source,bash,role=execute]
 ----
@@ -166,6 +182,24 @@ rbd map test_pool/test
 ----
 rbd showmapped
 lsblk
+----
++
+.Sample Output
+----
+[root@utility ~]# rbd showmapped
+id  pool       namespace  image  snap  device   
+0   test_pool             test   -     /dev/rbd0
+[root@utility ~]# 
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+sr0     11:0    1  558K  0 rom  
+rbd0   251:0    0  128M  0 disk    <---
+vda    252:0    0   10G  0 disk 
+├─vda1 252:1    0    1M  0 part 
+├─vda2 252:2    0  200M  0 part /boot/efi
+├─vda3 252:3    0  600M  0 part /boot
+└─vda4 252:4    0  9.2G  0 part /
+vdb    252:16   0   40G  0 disk 
+└─vdb1 252:17   0   40G  0 part /exports-ocp4
 ----
 
 . Format the device with an XFS file system
@@ -220,4 +254,4 @@ rbd unmap /dev/rbd0
 rbd showmapped
 ----
 
-Reference: https://role.rhu.redhat.com/rol-rhu/app/courses/cl260-5.0/pages/ch06s02
+Reference: Red Hat Learning course CL260 version-5.0 - Chapter 6. Providing Block Storage Using RADOS Block Devices
