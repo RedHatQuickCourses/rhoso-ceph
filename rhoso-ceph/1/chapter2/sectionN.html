@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Deploy RHOSP18 with Ceph integration and verify your deployment :: Ceph Installation and Integration with RedHat OpenStack 18</title>
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Ceph Installation and Integration with RedHat OpenStack 18</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/changeme/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="rhoso-ceph" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Ceph Installation and Integration with RedHat OpenStack 18</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chapter1/index.html">Ceph Storage Cluster Deployment</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1/section1.html">Verify lab environment connectivity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1/section2.html">Install packages</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1/section3.html">Configuration files on the deployment server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1/section4.html">Deploy the Ceph storage cluster</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1/section5.html">Verify deployed cluster</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1/section6.html">Create storage pool</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Integration of Ceph storage cluster with Red Hat OpenStack 18</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section1.html">Verify your RHOSP18 and Ceph Storage cluster deployment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section2.html">Delete Dataplane and Controlplane deployment of RHOSP18 cluster</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section3.html">Configure the Ceph storage cluster for RHOSP storage requirements</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section4.html">Install OpenShift Data Foundation operator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section5.html">Create ODF StorageSystem</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section6.html">Storage class installation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section7.html">Configure controlplane to use redhat ceph storage cluster</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section8.html">Deploy OpenStack control plane and verify the installation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section9.html">Deploy OpenStack dataplane and verify its status</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section10.html">Verify RHOSO Ceph integration setup</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix A</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Ceph Installation and Integration with RedHat OpenStack 18</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Ceph Installation and Integration with RedHat OpenStack 18</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Ceph Installation and Integration with RedHat OpenStack 18</a></li>
+    <li><a href="sectionN.html">Deploy RHOSP18 with Ceph integration and verify your deployment</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Deploy RHOSP18 with Ceph integration and verify your deployment</h1>
+<h1 id="_configure_rhosp18_control_plane_to_use_ceph_storage_cluster" class="sect0"><a class="anchor" href="#_configure_rhosp18_control_plane_to_use_ceph_storage_cluster"></a>Configure RHOSP18 control plane to use Ceph storage cluster</h1>
+
+<h1 id="_configure_rhosp18_data_plane_to_use_ceph_storage_cluster" class="sect0"><a class="anchor" href="#_configure_rhosp18_data_plane_to_use_ceph_storage_cluster"></a>Configure RHOSP18 data plane to use Ceph storage cluster</h1>
+
+<h1 id="_install_openshift_data_foundation_operator" class="sect0"><a class="anchor" href="#_install_openshift_data_foundation_operator"></a>Install OpenShift Data Foundation operator</h1>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Access GUI console of the <code>workstation</code> VM as <code>student</code> user.</p>
+</li>
+<li>
+<p>Open terminal and login to the <code>utility</code> vm as <code>lab</code> user.</p>
+</li>
+<li>
+<p>Get the kubeadmin password from <code>/home/lab/ocp4/auth/kubeadmin-password</code> file.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo $(cat /home/lab/ocp4/auth/kubeadmin-password)</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Select the password string and copy it.</p>
+</li>
+<li>
+<p>Get the console url of your ocp cluster.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc whoami --show-console</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Right click on the console url and click on <code>Open Link</code> menu option.</p>
+</li>
+<li>
+<p>Firefox browser will open-up with the console login page for your ocp cluster.</p>
+</li>
+<li>
+<p>Provide username as <code>kubeadmin</code> and paste the password in the password field.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp-console-login.png" alt="ocp console login">
+</div>
+</div>
+</li>
+<li>
+<p>Click on <code>Log in</code> button to access the RedHat OpenShift console.</p>
+</li>
+<li>
+<p>On right hand side, expand <code>Operators</code> and click on <code>OperatorHub</code>.</p>
+</li>
+<li>
+<p>In the search box type <code>odf</code> and click on <code>OpenShift Data Foundation</code> option in displayed search results.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp-odf-operator.png" alt="ocp odf operator">
+</div>
+</div>
+</li>
+<li>
+<p>Click on <code>Install</code> button on top and then on the next page scroll down to click on the <code>Install</code> button at bottom.</p>
+</li>
+<li>
+<p>Wait for the OpenShift Data Foundation operator to get installed.</p>
+</li>
+<li>
+<p>Click on the <code>Refresh web console</code> pop-up option on top right corner.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp-odf-refresh.png" alt="ocp odf refresh">
+</div>
+</div>
+</li>
+<li>
+<p>When the page is refreshed, click on <code>Create StorageSystem</code> button.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You may need to navigate to the <strong>Operators</strong> then <strong>Installed Operators</strong> and then click on <strong>OpenShift Data Foundation</strong> option to get the option to create storage system if you do not see it after page refresh.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Select <strong>Create an external storage platform</strong> option and make sure <strong>Red Hat Ceph Storage</strong> option is selected, then click on <strong>Next</strong> button.</p>
+</li>
+<li>
+<p>Click on the <strong>Download script</strong> option on the next page.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp-odf-download.png" alt="ocp odf download">
+</div>
+</div>
+</li>
+<li>
+<p>Access the lab outside the gui session to login to <code>workstation</code> vm as <code>student</code> user.</p>
+</li>
+<li>
+<p>Copy <code>ceph-external-cluster-details-exporter.py</code> script from workstation vm to utility vm.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">scp /home/student/Downloads/ceph-external-cluster-details-exporter.py lab@utility:/tmp/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Login to <code>utility</code> vm as <code>lab</code> user.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ssh lab@utility</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>From there, copy the <code>ceph-external-cluster-details-exporter.py</code> file to <code>cephservera</code> vm.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[lab@utility ~]$ scp /tmp/ceph-external-cluster-details-exporter.py root@cephservera:</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Login to <code>cephservera</code> as <code>root</code> user.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ssh root@cephservera</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run the script on cephservera with arguments <code>--rbd-data-pool-name volumes</code>.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">python ceph-external-cluster-details-exporter.py --rbd-data-pool-name volumes</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>[root@cephservera ~]# python ceph-external-cluster-details-exporter.py --rbd-data-pool-name volumes
+[{"name": "rook-ceph-mon-endpoints", "kind": "ConfigMap", "data": {"data": "cephservera=192.168.51.211:6789", "maxMonId": "0", "mapping": "{}"}}, {"name": "rook-ceph-mon", "kind": "Secret", "data": {"admin-secret": "admin-secret", "fsid": "ac0a6f9c-406b-11ef-9369-5254000132d3", "mon-secret": "mon-secret"}}, {"name": "rook-ceph-operator-creds", "kind": "Secret", "data": {"userID": "client.healthchecker", "userKey": "AQD/c5FmZDMIDRAAqFP6CWyesad5W4z4vavjNw=="}}, {"name": "monitoring-endpoint", "kind": "CephCluster", "data": {"MonitoringEndpoint": "192.168.51.211", "MonitoringPort": "9283"}}, {"name": "rook-csi-rbd-node", "kind": "Secret", "data": {"userID": "csi-rbd-node", "userKey": "AQD/c5FmEA/KDhAAzDvqlAdg2eLTZwPlyafveA=="}}, {"name": "rook-csi-rbd-provisioner", "kind": "Secret", "data": {"userID": "csi-rbd-provisioner", "userKey": "AQD/c5FmCD4QEBAANfsSE9cbhJZOBCjfD8mFSg=="}}, {"name": "rook-ceph-dashboard-link", "kind": "Secret", "data": {"userID": "ceph-dashboard-link", "userKey": "https://192.168.51.211:8443/"}}, {"name": "ceph-rbd", "kind": "StorageClass", "data": {"pool": "volumes", "csi.storage.k8s.io/provisioner-secret-name": "rook-csi-rbd-provisioner", "csi.storage.k8s.io/controller-expand-secret-name": "rook-csi-rbd-provisioner", "csi.storage.k8s.io/node-stage-secret-name": "rook-csi-rbd-node"}}]</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Exit from the <code>cephservera</code> and then from the <code>utility</code> vm&#8217;s session to be back on the <code>workstation</code> vm.</p>
+</li>
+<li>
+<p>Copy the json output generatedf by <code>ceph-external-cluster-details-exporter.py</code> script on cephservera and paste it in <code>file.json</code> on workstation vm.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">vi file.json</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Go back to the gui session of the workstation vm.</p>
+</li>
+<li>
+<p>Click <strong>Browse</strong> button under <strong>External storage system metadata</strong> and select <code>file.json</code> file and then click <strong>Next</strong>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp-odf-json.png" alt="ocp odf json">
+</div>
+</div>
+</li>
+<li>
+<p>Click on the <strong>Create StorageSystem</strong> button on the next page.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp-odf-create.png" alt="ocp odf create">
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="sect1">
+<h2 id="_storage_class_installation"><a class="anchor" href="#_storage_class_installation"></a>Storage class installation</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Expand <strong>Storage</strong> option on right of the page and select <strong>StorageClasses</strong> option under it and click on <strong>Create StorageClass</strong> button on top right.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp-odf-sc.png" alt="ocp odf sc">
+</div>
+</div>
+</li>
+<li>
+<p>On the next page, create storage class with options as below:</p>
+<div class="paragraph">
+<p>Name: <strong>ocs-external-storagecluster-ceph-images</strong></p>
+</div>
+<div class="paragraph">
+<p>Provisioner: <strong>openshift-storage.rbd.csi.ceph.com</strong></p>
+</div>
+<div class="paragraph">
+<p>Storage Pool: <strong>images</strong></p>
+</div>
+<div class="paragraph">
+<p>Keep all other options as default.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp-odf-images.png" alt="ocp odf images">
+</div>
+</div>
+</li>
+<li>
+<p>Follow the same process as above to create another storage class with options:</p>
+<div class="paragraph">
+<p>Name: <strong>ocs-external-storagecluster-ceph-vms</strong></p>
+</div>
+<div class="paragraph">
+<p>Provisioner: <strong>openshift-storage.rbd.csi.ceph.com</strong></p>
+</div>
+<div class="paragraph">
+<p>Storage Pool: <strong>vms</strong></p>
+</div>
+<div class="paragraph">
+<p>Keep all other options as default.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configure_controlplane_to_use_redhat_ceph_storage_cluster"><a class="anchor" href="#_configure_controlplane_to_use_redhat_ceph_storage_cluster"></a>configure controlplane to use redhat ceph storage cluster</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Outside the gui session on terminal login to <strong>utility</strong> vm as <strong>lab</strong> user and be in the <strong>~/rhoso-files/rht/</strong> director to proceed further.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Extract the FSID from the Red Hat Ceph Storage secret:</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get secret ceph-conf-files -o json | jq -r '.data."ceph.conf"' | base64 -d | grep fsid | sed -e 's/fsid = //'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>[lab@utility rht]$ oc get secret ceph-conf-files -o json | jq -r '.data."ceph.conf"' | base64 -d | grep fsid | sed -e 's/fsid = //'
+	4cf346e4-385c-11ef-97ad-5254000132d3</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Edit <code>osp-ng-ceph-novacompute-cm.yaml</code> file for ceph-nova configmap and change <code>rbd_secret_uuid</code> value with the fsid string obtained from your lab in the above command.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">vi osp-ng-ceph-novacompute-cm.yaml</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Apply the configmap settings in <code>osp-ng-ctlplane-deploy-ceph.yaml</code> file.</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f osp-ng-ceph-novacompute-cm.yaml</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Edit <code>osp-ng-ctlplane-deploy-ceph.yaml</code> file for <code>OpenStackControlPlane</code> deployment and change <code>rbd_secret_uuid</code> value with the fsid string obtained from your lab in earlier step.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">vi osp-ng-ctlplane-deploy-ceph.yaml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy OpenStack control plane by applying <code>osp-ng-ctlplane-deploy-ceph.yaml</code> file.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f osp-ng-ctlplane-deploy-ceph.yaml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Track progress of control plane deployment</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">watch oc get pods</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify deployment is successful</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get openstackcontrolplanes</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>[lab@utility rht]$ oc get openstackcontrolplanes
+NAME                                 STATUS   MESSAGE
+openstack-galera-network-isolation   True     Setup complete
+[lab@utility rht]$</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create nova-custom-ceph service for openstack data plane by applying <code>osp-ng-nova-ceph-ansible-custom-svc.yaml</code> file.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f osp-ng-nova-ceph-ansible-custom-svc.yaml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create OpenStack dataplane node-set by applying <code>osp-ng-dataplane-node-set-deploy-ceph.yaml</code> file</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f osp-ng-dataplane-node-set-deploy-ceph.yaml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy OpenStack dataplane by applying <code>osp-ng-dataplane-deployment.yaml</code> file.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f osp-ng-dataplane-deployment.yaml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Check the jobs being run by the deployment process.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">watch oc get jobs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Press <code>Ctrl+C</code> to exit from the watch command.</p>
+</div>
+</li>
+<li>
+<p>Check the pods being run by the deployment process.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">watch oc get pods</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Press <code>Ctrl+C</code> to exit from the watch command.</p>
+</div>
+</li>
+<li>
+<p>Verify successful completion of the dataplane deployment</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get openstackdataplanedeployments</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>[lab@utility rht]$ oc get openstackdataplanedeployments
+NAME                  NODESETS                  STATUS   MESSAGE
+openstack-edpm-ipam   ["openstack-edpm-ipam"]   True     Setup complete
+[lab@utility rht]$</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Discover hosts</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc rsh nova-cell0-conductor-0 nova-manage cell_v2 discover_hosts --verbose</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>[lab@utility rht]$ oc rsh nova-cell0-conductor-0 nova-manage cell_v2 discover_hosts --verbose
+Modules with known eventlet monkey patching issues were imported prior to eventlet monkey patching: urllib3. This warning can usually be ignored if the caller is only importing and not executing nova code.
+2024-07-12 11:14:41.596 5976 WARNING oslo_policy.policy [None req-ccecbeb1-247e-422b-8d3b-82d1c5a7841b - - - - - -] JSON formatted policy_file support is deprecated since Victoria release. You need to use YAML format which will be default in future. You can use ``oslopolicy-convert-json-to-yaml`` tool to convert existing JSON-formatted policy file to YAML-formatted in backward compatible way: https://docs.openstack.org/oslo.policy/latest/cli/oslopolicy-convert-json-to-yaml.html.
+2024-07-12 11:14:41.597 5976 WARNING oslo_policy.policy [None req-ccecbeb1-247e-422b-8d3b-82d1c5a7841b - - - - - -] JSON formatted policy_file support is deprecated since Victoria release. You need to use YAML format which will be default in future. You can use ``oslopolicy-convert-json-to-yaml`` tool to convert existing JSON-formatted policy file to YAML-formatted in backward compatible way: https://docs.openstack.org/oslo.policy/latest/cli/oslopolicy-convert-json-to-yaml.html.
+Found 2 cell mappings.
+Skipping cell0 since it does not contain hosts.
+Getting computes from cell 'cell1': 8b4dc29e-cd9f-4449-8486-6336b4d35c88
+Checking host mapping for compute host 'compute01.ocp4.example.com': e4cb88d4-4457-47e2-93de-7b89db3d65fa
+Creating host mapping for compute host 'compute01.ocp4.example.com': e4cb88d4-4457-47e2-93de-7b89db3d65fa
+Checking host mapping for compute host 'compute02.ocp4.example.com': b1ead9bc-7a3e-4ebf-baff-db0ced1626aa
+Creating host mapping for compute host 'compute02.ocp4.example.com': b1ead9bc-7a3e-4ebf-baff-db0ced1626aa
+Found 2 unmapped computes in cell: 8b4dc29e-cd9f-4449-8486-6336b4d35c88
+[lab@utility rht]$ oc rsh openstackclient</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify the dataplane deployment by launching instance</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export GATEWAY=192.168.51.254
+export PUBLIC_NETWORK_CIDR=192.168.51.0/24
+export PRIVATE_NETWORK_CIDR=192.168.100.0/24
+export PUBLIC_NET_START=192.168.51.91
+export PUBLIC_NET_END=192.168.51.99
+export DNS_SERVER=8.8.8.8
+openstack flavor create --ram 512 --disk 1 --vcpu 1 --public tiny
+curl -O -L https://github.com/cirros-dev/cirros/releases/download/0.6.2/cirros-0.6.2-x86_64-disk.img
+openstack image create cirros --container-format bare --disk-format qcow2 --public --file cirros-0.6.2-x86_64-disk.img
+openstack security group create basic
+openstack security group rule create basic --protocol tcp --dst-port 22:22 --remote-ip 0.0.0.0/0
+openstack security group rule create --protocol icmp basic
+openstack security group rule create --protocol udp --dst-port 53:53 basic
+openstack network create --external --provider-physical-network datacentre --provider-network-type flat public
+openstack network create --internal private
+openstack subnet create public-net \
+--subnet-range $PUBLIC_NETWORK_CIDR \
+--no-dhcp \
+--gateway $GATEWAY \
+--allocation-pool start=$PUBLIC_NET_START,end=$PUBLIC_NET_END \
+--network public
+openstack subnet create private-net \
+--subnet-range $PRIVATE_NETWORK_CIDR \
+--network private
+openstack router create vrouter
+openstack router set vrouter --external-gateway public
+openstack router add subnet vrouter private-net
+openstack server create \
+    --flavor tiny --network private --security-group basic \
+    --image cirros test-server</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>[root@compute01 ~]# podman logs nova_compute | grep 0d19bf2b-806e-4a12-a81e-170c6c89bcb9 | grep ERROR
+. . .
+. . .
+2024-07-12 11:17:39.631 2 ERROR nova.compute.manager [None req-795d8b7c-bedf-4f82-a8ba-023887d95263 7adc74ec29fc4f3ea8a24d84973c13f2 6e790b31b10a418ebbb8e67fc59dd023 - - default default] [instance: 0d19bf2b-806e-4a12-a81e-170c6c89bcb9] Failed to build and run instance: libvirt.libvirtError: Unable to delete file /var/lib/nova/instances/0d19bf2b-806e-4a12-a81e-170c6c89bcb9/console.log: Permission denied
+. . .
+. . .</p>
+</div>
+<div class="paragraph">
+<p>[root@compute01 ~]# grep denied /var/log/audit/audit.log
+type=AVC msg=audit(1720783057.158:18933): avc:  denied  { search } for  pid=848 comm="virtlogd" name="nova" dev="vda4" ino=8393239 scontext=system_u:system_r:virtlogd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:container_file_t:s0 tclass=dir permissive=0
+[root@compute01 ~]#</p>
+</div>
+<div class="paragraph">
+<p>Apply other ceph related yaml except controlplane and dataplane-node-set</p>
+</div>
+<div class="paragraph">
+<p>Install ODF operator
+Create storageclass for volumes and images with appropriate name</p>
+</div>
+<div class="paragraph">
+<p>&lt;screenshots&gt;</p>
+</div>
+<div class="paragraph">
+<p>Download <code>ceph-external-cluster-details-exporter.py</code> script</p>
+</div>
+<div class="paragraph">
+<p>scp the script from workstation to lab@utility to root@cephservera</p>
+</div>
+<div class="paragraph">
+<p>Run the script on cephservera</p>
+</div>
+<div class="paragraph">
+<p>python /tmp/ceph-external-cluster-details-exporter.py --rbd-data-pool-name volumes</p>
+</div>
+<div class="paragraph">
+<p>sample output</p>
+</div>
+<div class="paragraph">
+<p>[root@cephservera ~]# python /tmp/ceph-external-cluster-details-exporter.py --rbd-data-pool-name volumes</p>
+</div>
+<div class="paragraph">
+<p>copy the output and paste it in file.json on workstation vm</p>
+</div>
+<div class="paragraph">
+<p>Browse file.json</p>
+</div>
+<div class="paragraph">
+<p>&lt;screenshots&gt;</p>
+</div>
+<div class="paragraph">
+<p>Under <code>Storage</code> drop-down on left hand pane, click on <code>StorageClasses</code>
+Click on <code>Create StorageClass</code> button on top
+Create storage class with name <code>ocs-external-storagecluster-ceph-images</code> and pool <code>images</code>
+Create another storage class with name <code>ocs-external-storagecluster-ceph-vms</code> and pool <code>vms</code></p>
+</div>
+<div class="paragraph">
+<p>configure controlplane to use redhat ceph storage cluster</p>
+</div>
+<div class="paragraph">
+<p>Login to compute nodes and register:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>subscription-manager register
+subscription-manager repos --disable=*
+subscription-manager repos --enable=rhceph-6-tools-for-rhel-9-x86_64-rpms --enable=rhel-9-for-x86_64-baseos-rpms --enable=rhel-9-for-x86_64-appstream-rpms --enable=rhel-9-for-x86_64-highavailability-rpms --enable=openstack-beta-for-rhel-9-x86_64-rpms --enable=fast-datapath-for-rhel-9-x86_64-rpms
+dnf install -y podman
+systemctl enable podman --now
+systemctl status podman</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open <code>workstation</code> VM&#8217;s GUI console and login as <code>student</code> user with password <em>student</em>.</p>
+</li>
+<li>
+<p>Open terminal and from there login to <code>utility</code> vm as <code>lab</code> user.</p>
+</li>
+<li>
+<p>Run <code>cat ~/ocp4/auth/kubeadmin-password</code> and copy the password of kubeadmin user.</p>
+</li>
+<li>
+<p>Run <code>oc whoami --show-console</code> command to probe for the console url of the OpenShift cluster.</p>
+</li>
+<li>
+<p>Right click on the url and select <code>Open Link</code> option from the menu.</p>
+</li>
+<li>
+<p>The link will e opened in the Firefox web broswer.</p>
+</li>
+<li>
+<p>Click on the option to login as kube amdin.</p>
+</li>
+<li>
+<p>Type <code>kubeadmin</code> in the username field and paste the password copied earlier form the terminal.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You are now logged in to the OpenShift web console.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click on <code>Operators</code> option on right pane to expand it and then click on <code>OperatorHub</code></p>
+</li>
+<li>
+<p>Search for the string <code>ODF</code> or <code>OpenShift Data Foundation</code></p>
+</li>
+<li>
+<p>Install the operator by selecting all default options.</p>
+</li>
+<li>
+<p>When the operator is installed, click on <code>Create StorageSystem</code></p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

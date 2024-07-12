@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Deploy the Ceph storage cluster :: Ceph Installation and Integration with RedHat OpenStack 18</title>
+    <title>Install OpenShift Data Foundation operator :: Ceph Installation and Integration with RedHat OpenStack 18</title>
     <link rel="prev" href="section3.html">
     <link rel="next" href="section5.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -47,25 +47,25 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Ceph Storage Cluster Deployment</a>
+    <a class="nav-link" href="../chapter1/index.html">Ceph Storage Cluster Deployment</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section1.html">Verify lab environment connectivity</a>
+    <a class="nav-link" href="../chapter1/section1.html">Verify lab environment connectivity</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section2.html">Install packages</a>
+    <a class="nav-link" href="../chapter1/section2.html">Install packages</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section3.html">Configuration files on the deployment server</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="section4.html">Deploy the Ceph storage cluster</a>
+    <a class="nav-link" href="../chapter1/section3.html">Configuration files on the deployment server</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section5.html">Verify deployed cluster</a>
+    <a class="nav-link" href="../chapter1/section4.html">Deploy the Ceph storage cluster</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section6.html">Create storage pool</a>
+    <a class="nav-link" href="../chapter1/section5.html">Verify deployed cluster</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1/section6.html">Create storage pool</a>
   </li>
 </ul>
   </li>
@@ -75,37 +75,37 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter2/index.html">Integration of Ceph storage cluster with Red Hat OpenStack 18</a>
+    <a class="nav-link" href="index.html">Integration of Ceph storage cluster with Red Hat OpenStack 18</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section1.html">Verify your RHOSP18 and Ceph Storage cluster deployment</a>
+    <a class="nav-link" href="section1.html">Verify your RHOSP18 and Ceph Storage cluster deployment</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section2.html">Delete Dataplane and Controlplane deployment of RHOSP18 cluster</a>
+    <a class="nav-link" href="section2.html">Delete Dataplane and Controlplane deployment of RHOSP18 cluster</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section3.html">Configure the Ceph storage cluster for RHOSP storage requirements</a>
+    <a class="nav-link" href="section3.html">Configure the Ceph storage cluster for RHOSP storage requirements</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="section4.html">Install OpenShift Data Foundation operator</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section4.html">Install OpenShift Data Foundation operator</a>
+    <a class="nav-link" href="section5.html">Create ODF StorageSystem</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section5.html">Create ODF StorageSystem</a>
+    <a class="nav-link" href="section6.html">Storage class installation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section6.html">Storage class installation</a>
+    <a class="nav-link" href="section7.html">Configure controlplane to use redhat ceph storage cluster</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section7.html">Configure controlplane to use redhat ceph storage cluster</a>
+    <a class="nav-link" href="section8.html">Deploy OpenStack control plane and verify the installation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section8.html">Deploy OpenStack control plane and verify the installation</a>
+    <a class="nav-link" href="section9.html">Deploy OpenStack dataplane and verify its status</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section9.html">Deploy OpenStack dataplane and verify its status</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section10.html">Verify RHOSO Ceph integration setup</a>
+    <a class="nav-link" href="section10.html">Verify RHOSO Ceph integration setup</a>
   </li>
 </ul>
   </li>
@@ -147,8 +147,8 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ceph Installation and Integration with RedHat OpenStack 18</a></li>
-    <li><a href="index.html">Ceph Storage Cluster Deployment</a></li>
-    <li><a href="section4.html">Deploy the Ceph storage cluster</a></li>
+    <li><a href="index.html">Integration of Ceph storage cluster with Red Hat OpenStack 18</a></li>
+    <li><a href="section4.html">Install OpenShift Data Foundation operator</a></li>
   </ul>
 </nav>
 </div>
@@ -157,88 +157,73 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Deploy the Ceph storage cluster</h1>
+<h1 class="page">Install OpenShift Data Foundation operator</h1>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Run below command to bootstrap your Ceph Storage Cluster.</p>
+<p>Access GUI console of the <code>workstation</code> VM as <code>student</code> user.</p>
+</li>
+<li>
+<p>Open terminal and login to the <code>utility</code> vm as <code>lab</code> user.</p>
+</li>
+<li>
+<p>Get the kubeadmin password from <code>/home/lab/ocp4/auth/kubeadmin-password</code> file.</p>
 <div class="listingblock execute">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cephadm bootstrap --apply-spec initial-config.yaml --mon-ip 192.168.51.211 --registry-json /etc/auth.json --allow-fqdn-hostname</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Sample Output</div>
-<div class="content">
-<pre>Verifying podman|docker is present...
-Verifying lvm2 is present...
-Verifying time synchronization is in place...
-Unit chronyd.service is enabled and running
-Repeating the final host check...
-podman (/usr/bin/podman) version 4.9.4 is present
-systemctl is present
-lvcreate is present
-Unit chronyd.service is enabled and running
-Host looks OK
-Cluster fsid: ac86af9a-2fdf-11ef-8c9c-52540001326f
-
-
-__output truncated__
-
-
-Ceph Dashboard is now available at:
-             URL: https://cephservera:8443/
-            User: admin
-        Password: 0dp0n5b1a8
-
-__output truncated__
-
-Enabling client.admin keyring and conf on hosts with "admin" label
-Applying initial-config.yaml to cluster
-Added ssh key to host cephserverb at address 192.168.51.212
-
-__output truncated__
-
-Saving cluster configuration to /var/lib/ceph/ac86af9a-2fdf-11ef-8c9c-52540001326f/config directory
-Skipping call home integration. --enable-ibm-call-home not provided
-Enabling autotune for osd_memory_target
-You can access the Ceph CLI as following in case of multi-cluster or non-default config:
-
-        sudo /usr/sbin/cephadm shell --fsid ac86af9a-2fdf-11ef-8c9c-52540001326f -c /etc/ceph/ceph.conf -k /etc/ceph/ceph.client.admin.keyring
-
-Or, if you are only running a single cluster on this host:
-
-        sudo /usr/sbin/cephadm shell
-
-Please consider enabling telemetry to help improve Ceph:
-
-        ceph telemetry on
-
-For more information see:
-
-        https://docs.ceph.com/en/latest/mgr/telemetry/
-
-Bootstrap complete.</pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo $(cat /home/lab/ocp4/auth/kubeadmin-password)</code></pre>
 </div>
 </div>
 </li>
+<li>
+<p>Select the password string and copy it.</p>
+</li>
+<li>
+<p>Get the console url of your ocp cluster.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc whoami --show-console</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Right click on the console url and click on <code>Open Link</code> menu option.</p>
+</li>
+<li>
+<p>Firefox browser will open-up with the console login page for your ocp cluster.</p>
+</li>
+<li>
+<p>Provide username as <code>kubeadmin</code> and paste the password in the password field.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp-console-login.png" alt="ocp console login">
+</div>
+</div>
+</li>
+<li>
+<p>Click on <code>Log in</code> button to access the RedHat OpenShift console.</p>
+</li>
+<li>
+<p>On right hand side, expand <code>Operators</code> and click on <code>OperatorHub</code>.</p>
+</li>
+<li>
+<p>In the search box type <code>odf</code> and click on <code>OpenShift Data Foundation</code> option in displayed search results.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp-odf-operator.png" alt="ocp odf operator">
+</div>
+</div>
+</li>
+<li>
+<p>Click on <code>Install</code> button on top and then on the next page scroll down to click on the <code>Install</code> button at bottom.</p>
+</li>
+<li>
+<p>Wait for the OpenShift Data Foundation operator to get installed.</p>
+</li>
 </ol>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You may have to wait for approximately 5 to 10 minutes for all background processes for installation to complete and the cluster to be in <strong>HEALTH_OK</strong> state. You may track the progress with <strong>watch caph -s</strong> command.
-</td>
-</tr>
-</table>
-</div>
 <nav class="pagination">
-  <span class="prev"><a href="section3.html">Configuration files on the deployment server</a></span>
-  <span class="next"><a href="section5.html">Verify deployed cluster</a></span>
+  <span class="prev"><a href="section3.html">Configure the Ceph storage cluster for RHOSP storage requirements</a></span>
+  <span class="next"><a href="section5.html">Create ODF StorageSystem</a></span>
 </nav>
 </article>
   </div>

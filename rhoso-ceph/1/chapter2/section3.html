@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Integration of Ceph storage cluster with Red Hat OpenStack 18 :: Ceph Installation and Integration with RedHat OpenStack 18</title>
-    <link rel="prev" href="../chapter1/section6.html">
-    <link rel="next" href="section1.html">
+    <title>Configure the Ceph storage cluster for RHOSP storage requirements :: Ceph Installation and Integration with RedHat OpenStack 18</title>
+    <link rel="prev" href="section2.html">
+    <link rel="next" href="section4.html">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>var uiRootPath = '../../../_'</script>
@@ -73,7 +73,7 @@
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="index.html">Integration of Ceph storage cluster with Red Hat OpenStack 18</a>
 <ul class="nav-list">
@@ -83,7 +83,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section2.html">Delete Dataplane and Controlplane deployment of RHOSP18 cluster</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="section3.html">Configure the Ceph storage cluster for RHOSP storage requirements</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -148,6 +148,7 @@
   <ul>
     <li><a href="../index.html">Ceph Installation and Integration with RedHat OpenStack 18</a></li>
     <li><a href="index.html">Integration of Ceph storage cluster with Red Hat OpenStack 18</a></li>
+    <li><a href="section3.html">Configure the Ceph storage cluster for RHOSP storage requirements</a></li>
   </ul>
 </nav>
 </div>
@@ -156,13 +157,128 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Integration of Ceph storage cluster with Red Hat OpenStack 18</h1>
-<div class="paragraph">
-<p>This chappter covers step-by-step instructions for integration of the pre-deployed ceph cluster in previous lab to a pre-existing RHOSP18 deployment.</p>
+<h1 class="page">Configure the Ceph storage cluster for RHOSP storage requirements</h1>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Connect to <code>cephservera</code> as <code>root</code> user</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ssh root@cephservera</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>[lab@utility rht]$ ssh root@cephservera
+Activate the web console with: systemctl enable --now cockpit.socket
+
+Register this system with Red Hat Insights: insights-client --register
+Create an account or view all your systems at https://red.ht/insights-dashboard
+Last login: Thu Jul 11 07:14:04 2024 from 192.168.51.254
+[root@cephservera ~]#</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create storage pools for use with RHOSP deployment</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">for P in vms volumes images; do
+  cephadm shell -- ceph osd pool create $P;
+  cephadm shell -- ceph osd pool application enable $P rbd;
+done</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a cephx key for RHOSO to use to access pools:</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cephadm shell -- \
+   ceph auth add client.openstack \
+     mgr 'allow *' \
+        mon 'allow r' \
+        osd 'allow class-read object_prefix rbd_children, allow rwx pool=vms, allow rwx pool=volumes, allow rwx pool=images'</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Export the cephx key:</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cephadm shell -- ceph auth get client.openstack &gt; /etc/ceph/ceph.client.openstack.keyring</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Export the configuration file:</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cephadm shell -- ceph config generate-minimal-conf &gt; /etc/ceph/ceph.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Copy the cephx key and configuration file created in the above step to utility vm.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">scp /etc/ceph/ceph.conf /etc/ceph/ceph.client.openstack.keyring lab@utility:/tmp/</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>[root@cephservera ~]# scp /etc/ceph/ceph.conf /etc/ceph/ceph.client.openstack.keyring lab@utility:/tmp/
+ceph.conf                                                                              100%  387     1.1MB/s   00:00
+ceph.client.openstack.keyring                                                          100%  236   604.1KB/s   00:00
+[root@cephservera ~]#</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Exit from the <code>cephservera</code> ssh session to get back to the <code>utility</code> vm.</p>
+</li>
+<li>
+<p>On <code>utility</code> vm, copy the ceph configuration and keyring files from /tmp/ directory to <code>/etc/ceph/</code> directory.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp /tmp/ceph.* /etc/ceph/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Base64 encode these files and note the generated string</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">KEY=$(cat /etc/ceph/ceph.client.openstack.keyring | base64 -w 0)
+CONF=$(cat /etc/ceph/ceph.conf | base64 -w 0)
+echo $KEY
+echo $CONF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Edit <code>osp-ng-ceph-conf-files.yaml</code> file and replace the <code>ceph.client.openstack.keyring</code> and <code>ceph.conf</code> values with relevent strings from <code>$KEY</code> and <code>$CONF</code> respectively.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">osp-ng-ceph-conf-files.yaml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Apply <code>osp-ng-ceph-conf-files.yaml</code> yaml file.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f osp-ng-ceph-conf-files.yaml</code></pre>
+</div>
+</div>
+</li>
+</ol>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../chapter1/section6.html">Create storage pool</a></span>
-  <span class="next"><a href="section1.html">Verify your RHOSP18 and Ceph Storage cluster deployment</a></span>
+  <span class="prev"><a href="section2.html">Delete Dataplane and Controlplane deployment of RHOSP18 cluster</a></span>
+  <span class="next"><a href="section4.html">Install OpenShift Data Foundation operator</a></span>
 </nav>
 </article>
   </div>

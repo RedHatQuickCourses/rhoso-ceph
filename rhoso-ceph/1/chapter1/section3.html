@@ -75,26 +75,37 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter2/index.html">Chapter 2</a>
+    <a class="nav-link" href="../chapter2/index.html">Integration of Ceph storage cluster with Red Hat OpenStack 18</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section1.html">Section 1</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter3/index.html">Chapter 3</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter3/section1.html">Section 1</a>
+    <a class="nav-link" href="../chapter2/section1.html">Verify your RHOSP18 and Ceph Storage cluster deployment</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter3/section2.html">Section 2</a>
+    <a class="nav-link" href="../chapter2/section2.html">Delete Dataplane and Controlplane deployment of RHOSP18 cluster</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section3.html">Configure the Ceph storage cluster for RHOSP storage requirements</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section4.html">Install OpenShift Data Foundation operator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section5.html">Create ODF StorageSystem</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section6.html">Storage class installation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section7.html">Configure controlplane to use redhat ceph storage cluster</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section8.html">Deploy OpenStack control plane and verify the installation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section9.html">Deploy OpenStack dataplane and verify its status</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section10.html">Verify RHOSO Ceph integration setup</a>
   </li>
 </ul>
   </li>
@@ -154,13 +165,21 @@
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-We will be using <code>cephservera</code> as the deployment server.
+We will be using <strong>cephservera</strong> as the deployment server.
 </td>
 </tr>
 </table>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
+<li>
+<p>Connect to <code>cephservera</code> as <code>root</code> user</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ssh root@cephservera</code></pre>
+</div>
+</div>
+</li>
 <li>
 <p>Create <code>auth.json</code> file on your deployment server <code>cephservera</code>.</p>
 <div class="listingblock execute">
@@ -192,23 +211,23 @@ We will be using <code>cephservera</code> as the deployment server.
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">---
 service_type: host
-addr: 192.168.51.111
+addr: 192.168.51.211
 hostname: cephservera
 ---
 service_type: host
-addr: 192.168.51.112
+addr: 192.168.51.212
 hostname: cephserverb
 ---
 service_type: host
-addr: 192.168.51.113
+addr: 192.168.51.213
 hostname: cephserverc
 ---
 service_type: host
-addr: 192.168.51.114
+addr: 192.168.51.214
 hostname: cephserverd
 ---
 service_type: host
-addr: 192.168.51.115
+addr: 192.168.51.215
 hostname: cephservere
 ---
 service_type: mon

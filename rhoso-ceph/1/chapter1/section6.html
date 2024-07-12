@@ -75,26 +75,37 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter2/index.html">Chapter 2</a>
+    <a class="nav-link" href="../chapter2/index.html">Integration of Ceph storage cluster with Red Hat OpenStack 18</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section1.html">Section 1</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter3/index.html">Chapter 3</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter3/section1.html">Section 1</a>
+    <a class="nav-link" href="../chapter2/section1.html">Verify your RHOSP18 and Ceph Storage cluster deployment</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter3/section2.html">Section 2</a>
+    <a class="nav-link" href="../chapter2/section2.html">Delete Dataplane and Controlplane deployment of RHOSP18 cluster</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section3.html">Configure the Ceph storage cluster for RHOSP storage requirements</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section4.html">Install OpenShift Data Foundation operator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section5.html">Create ODF StorageSystem</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section6.html">Storage class installation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section7.html">Configure controlplane to use redhat ceph storage cluster</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section8.html">Deploy OpenStack control plane and verify the installation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section9.html">Deploy OpenStack dataplane and verify its status</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section10.html">Verify RHOSO Ceph integration setup</a>
   </li>
 </ul>
   </li>
@@ -154,7 +165,10 @@ We are using the utility VM as client to test and verify the ceph storage cluste
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Login to <code>utility</code> VM as root user and execute below commands to install <code>ceph-common</code> package for client side utilities.</p>
+<p>Exit from the shell session on <code>cephservera</code> and login to <code>utility</code> VM as root user.</p>
+</li>
+<li>
+<p>Execute below commands to install <code>ceph-common</code> package for client side utilities.</p>
 <div class="listingblock execute">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mv /etc/yum.repos.d/rhel_dvd.repo /tmp/
@@ -165,9 +179,12 @@ subscription-manager repos --enable=rhel-9-for-x86_64-baseos-rpms --enable=rhel-
 dnf -y install chrony ceph-common</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Provide your subscription-manager login credentials when prompted.</p>
+</div>
 </li>
 <li>
-<p>Login to <code>cephservera</code> VM as <code>root</code> user.</p>
+<p>Exit from the root session on <code>utility</code> vm and login to <code>cephservera</code> VM as <code>root</code> user.</p>
 <div class="listingblock execute">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ssh root@cephservera</code></pre>
@@ -295,7 +312,21 @@ We are using the utility VM as client to test and verify the ceph storage cluste
 </div>
 </li>
 <li>
-<p>Login to the client system (utility VM) as root user and temporarily set the default user ID used for connections to the cluster to <code>test_pool.utility</code>.</p>
+<p>Login to the client system (utility VM)</p>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>[root@cephservera ~]# exit
+logout
+Connection to cephservera closed.
+[student@utility ~]$ sudo su -
+[sudo] password for student:
+[root@utility ~]#</pre>
+</div>
+</div>
+</li>
+<li>
+<p>On <code>utility</code> VM as <code>root</code> user, temporarily set the default user ID used for connections to the cluster to <code>test_pool.utility</code>.</p>
 <div class="listingblock execute">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export CEPH_ARGS='--id=test_pool.utility'</code></pre>
@@ -348,6 +379,25 @@ We are using the utility VM as client to test and verify the ceph storage cluste
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rbd showmapped
 lsblk</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample Output</div>
+<div class="content">
+<pre>[root@utility ~]# rbd showmapped
+id  pool       namespace  image  snap  device
+0   test_pool             test   -     /dev/rbd0
+[root@utility ~]#
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+sr0     11:0    1  558K  0 rom
+rbd0   251:0    0  128M  0 disk    &lt;---
+vda    252:0    0   10G  0 disk
+├─vda1 252:1    0    1M  0 part
+├─vda2 252:2    0  200M  0 part /boot/efi
+├─vda3 252:3    0  600M  0 part /boot
+└─vda4 252:4    0  9.2G  0 part /
+vdb    252:16   0   40G  0 disk
+└─vdb1 252:17   0   40G  0 part /exports-ocp4</pre>
 </div>
 </div>
 </li>
@@ -413,11 +463,11 @@ rbd showmapped</code></pre>
 </ol>
 </div>
 <div class="paragraph">
-<p>Reference: <a href="https://role.rhu.redhat.com/rol-rhu/app/courses/cl260-5.0/pages/ch06s02" class="bare">https://role.rhu.redhat.com/rol-rhu/app/courses/cl260-5.0/pages/ch06s02</a></p>
+<p>Reference: Red Hat Learning course CL260 version-5.0 - Chapter 6. Providing Block Storage Using RADOS Block Devices</p>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="section5.html">Verify deployed cluster</a></span>
-  <span class="next"><a href="../chapter2/index.html">Chapter 2</a></span>
+  <span class="next"><a href="../chapter2/index.html">Integration of Ceph storage cluster with Red Hat OpenStack 18</a></span>
 </nav>
 </article>
   </div>
