@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Ceph Installation and Integration with Red Hat OpenStack 18 :: Ceph Installation and Integration with RedHat OpenStack 18</title>
+    <title>Red Hat Ceph Storage Cluster Installation and Integration with Red Hat OpenStack 18 :: Ceph Installation and Integration with RedHat OpenStack 18</title>
     <link rel="next" href="chapter1/index.html">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -155,13 +155,114 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Ceph Installation and Integration with Red Hat OpenStack 18</h1>
-<div class="sect1">
-<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>Introduction</h2>
+<h1 class="page">Red Hat Ceph Storage Cluster Installation and Integration with Red Hat OpenStack 18</h1>
+<div id="preamble">
 <div class="sectionbody">
+<div class="paragraph">
+<p>Welcome to this quick course on <em>Red Hat Ceph Storage Cluster Installation and Integration with Red Hat OpenStack 18</em>.</p>
+</div>
+<div class="paragraph">
+<p>Red Hat OpenStack Services on OpenShift (RHOSO) is the next generation of Red Hat OpenStack Platform.
+Click <a href="https://www.redhat.com/en/blog/red-hat-openstack-services-openshift-next-generation-red-hat-openstack-platform">here</a> for more information.</p>
+</div>
+<div class="paragraph">
+<p>Red Hat Ceph Storage is a software-defined storage platform engineered for private cloud architectures.
+Click <a href="https://www.redhat.com/en/technologies/storage/ceph">here</a> for more information.</p>
+</div>
 <div class="paragraph">
 <p>This course covers step-by-step instructions for deployment of a stand alone Ceph storage cluster.
 It also covers the hands-on lab for integration of external Ceph storage cluster with existing RHOSP18 deployment.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_authors"><a class="anchor" href="#_authors"></a>Authors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The PTL team acknowledges the valuable contributions of the following Red Hat associates:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Gil Rosenberg</p>
+</li>
+<li>
+<p>Ashish Shah</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_classroom_environment_for_red_hat_associates"><a class="anchor" href="#_classroom_environment_for_red_hat_associates"></a>Classroom Environment for Red Hat Associates</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Continue using the <a href="https://link-to-be-added.com">HOL013</a> lab on RedHat Online Learning (ROLE) platform for hands-on activity for this course.
+FIXME: the link will bee added when available.</p>
+</div>
+<div class="paragraph">
+<p>FIXME: below instructions will be modified soon&#8230;&#8203;</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on <code>Order</code> button for <code>Red Hat OpenStack Services on OpenShift Dev Preview</code> catalog.</p>
+</li>
+<li>
+<p>Under <code>Activity</code> option select <code>Practice / Enablement</code></p>
+</li>
+<li>
+<p>In the <code>Purpose</code> drop down box, select <code>Learning about the product</code></p>
+</li>
+<li>
+<p>Leave all other options at default and click on <code>Order</code> button at bottom of the page.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>RHEL system administration: RHCSA (RH124, RH134)</p>
+</li>
+<li>
+<p>Local container management on RHEL with podman (RH134).</p>
+</li>
+<li>
+<p>Basic operation of OpenStack Services on OpenShift: OSP-Operations-I-1 and OSP-Operations-I-2. [or equivalent courses from OSP 16/17]</p>
+</li>
+<li>
+<p>Basic administration of OpenStack Services on OpenShift: OSP-Administration-I-1, OSP-Administration-I-2, and OSP-Administration-I-3.</p>
+</li>
+<li>
+<p>Datacenter networking concepts: ISO model, VLANs, firewalls, and Internet protocols, including but not limited to ICMP, IP, and HTTP.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_objectives"><a class="anchor" href="#_objectives"></a>Objectives</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Deploy Red Hat Ceph Storage (RHCS) Cluster.</p>
+</li>
+<li>
+<p>Configure a client system to use disk exported from the RHCS cluster.</p>
+</li>
+<li>
+<p>Configure an RHOSP18 deployment to use RHCS cluster.</p>
+</li>
+<li>
+<p>Verify the installation and integration of RHOSP and Ceph cluster.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
