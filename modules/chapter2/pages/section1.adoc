@@ -125,7 +125,7 @@ sh-5.1$ openstack compute service list
 +--------------------------------------+----------------+----------------------------+----------+---------+-------+----------------------------+
 ----
 
-. Check hypervisor list and verify compute nodes are recognised there.
+. Check hypervisor list and verify compute nodes are recognized there.
 +
 [source,bash,role=execute]
 ----
@@ -202,7 +202,7 @@ openstack server create \
     --image cirros test-server
 ----
 
-. Watch the stauts of the openstack instance
+. Watch the status of the openstack instance
 +
 [source,bash,role=execute]
 ----
@@ -220,7 +220,7 @@ Every 2.0s: openstack server list                                               
 +--------------------------------------+-------------+--------+------------------------+--------+--------+
 ----
 +
-Press `Ctrl+C` to exit from watch and then run `exit` command to quit from openstackclient sessiopn.
+Press `Ctrl+C` to exit from watch and then run `exit` command to quit from openstackclient session.
 
 . From utility vm login to the `cephservera` vm.
 +

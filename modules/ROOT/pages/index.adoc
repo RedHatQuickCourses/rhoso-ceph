@@ -1,7 +1,49 @@
-= Ceph Installation and Integration with Red Hat OpenStack 18
+= Red Hat Ceph Storage Cluster Installation and Integration with Red Hat OpenStack 18
 :navtitle: Home
 
-== Introduction
+Welcome to this quick course on _Red Hat Ceph Storage Cluster Installation and Integration with Red Hat OpenStack 18_.
+
+Red Hat OpenStack Services on OpenShift (RHOSO) is the next generation of Red Hat OpenStack Platform.
+Click https://www.redhat.com/en/blog/red-hat-openstack-services-openshift-next-generation-red-hat-openstack-platform[here] for more information.
+
+Red Hat Ceph Storage is a software-defined storage platform engineered for private cloud architectures.
+Click https://www.redhat.com/en/technologies/storage/ceph[here] for more information.
+
 
 This course covers step-by-step instructions for deployment of a stand alone Ceph storage cluster. 
 It also covers the hands-on lab for integration of external Ceph storage cluster with existing RHOSP18 deployment.
+
+
+== Authors
+
+The PTL team acknowledges the valuable contributions of the following Red Hat associates:
+
+* Gil Rosenberg
+* Ashish Shah
+
+== Classroom Environment for Red Hat Associates
+
+Continue using the https://link-to-be-added.com[HOL013] lab on RedHat Online Learning (ROLE) platform for hands-on activity for this course.
+FIXME: the link will bee added when available.
+
+FIXME: below instructions will be modified soon...
+
+* Click on `Order` button for `Red Hat OpenStack Services on OpenShift Dev Preview` catalog.
+* Under `Activity` option select `Practice / Enablement`
+* In the `Purpose` drop down box, select `Learning about the product`
+* Leave all other options at default and click on `Order` button at bottom of the page.
+
+== Prerequisites
+
+* RHEL system administration: RHCSA (RH124, RH134)
+* Local container management on RHEL with podman (RH134).
+* Basic operation of OpenStack Services on OpenShift: OSP-Operations-I-1 and OSP-Operations-I-2. [or equivalent courses from OSP 16/17]
+* Basic administration of OpenStack Services on OpenShift: OSP-Administration-I-1, OSP-Administration-I-2, and OSP-Administration-I-3.
+* Datacenter networking concepts: ISO model, VLANs, firewalls, and Internet protocols, including but not limited to ICMP, IP, and HTTP.
+
+== Objectives
+
+* Deploy Red Hat Ceph Storage (RHCS) Cluster.
+* Configure a client system to use disk exported from the RHCS cluster.
+* Configure an RHOSP18 deployment to use RHCS cluster.
+* Verify the installation and integration of RHOSP and Ceph cluster.

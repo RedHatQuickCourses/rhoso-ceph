@@ -39,7 +39,7 @@ openstackdataplanenodeset.dataplane.openstack.org "openstack-edpm-ipam" deleted
 
 . Watch `oc get jobs` output and see various purge jobs getting created.
 +
-NOTE: You may not see all the jobs getting cleand up upon deletion of dataplane. Wait for a couple of minutes and then proceed further with the control plane deletion even if you do not see any change in the output.
+NOTE: You may not see all the jobs getting cleaned up upon deletion of dataplane. Wait for a couple of minutes and then proceed further with the control plane deletion even if you do not see any change in the output.
 
 . Delete existing openstack controlplane deployment.
 +
@@ -73,7 +73,7 @@ ovn-controller-ovs-xtb5r            2/2     Terminating   2          16d
 +
 Press `Ctrl+C` to exit from the watch session.
 +
-NOTE: All the pods should get cleanded up upon deletion of controlplane. Wait until all the pods are cleared before proceeding to next page for new deployment.
+NOTE: All the pods should get cleaned up upon deletion of controlplane. Wait until all the pods are cleared before proceeding to next page for new deployment.
 
 . Get list of pvcs and delete the remaining pvcs.
 +

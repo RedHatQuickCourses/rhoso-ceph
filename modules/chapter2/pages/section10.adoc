@@ -47,7 +47,7 @@ watch opensdtack server list
 
 .. You may look for the root cause by searching for the instance uuid in logs.
 +
-NOTE: A common failure observed in this lab is due to selinux preventing deletion of instance's console.log file.
+NOTE: A common failure observed in this lab is due to selinux preventing deletion of instance's console.log file. FIXME: avoid this
 +
 .Sample output
 ----
@@ -78,7 +78,7 @@ setenforce 0
 
 .. Follow this process on another compute node with ip `192.168.50.32`
 
-. Launch the instnace and make sure it is in *Active* state.
+. Launch the instance and make sure it is in *Active* state.
 
 . From `utility` vm, login to `cephservera` as `root` user.
 +

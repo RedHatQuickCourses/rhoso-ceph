@@ -87,7 +87,7 @@ echo $KEY
 echo $CONF
 ----
 
-. Edit `osp-ng-ceph-conf-files.yaml` file and replace the `ceph.client.openstack.keyring` and `ceph.conf` values with relevent strings from `$KEY` and `$CONF` respectively.
+. Edit `osp-ng-ceph-conf-files.yaml` file and replace the `ceph.client.openstack.keyring` and `ceph.conf` values with relevant strings from `$KEY` and `$CONF` respectively.
 +
 [source,bash,role=execute]
 ----
