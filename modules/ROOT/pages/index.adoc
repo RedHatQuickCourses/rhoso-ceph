@@ -27,7 +27,7 @@ Continue using the https://role.rhu.redhat.com/rol-rhu/app/courses/hol013-18.0/p
 
 * On the `Lab Environment` tab click `Create` button to provision the lab.
 * Wait for the lab to get started and be in up and running state.
-* Refer to the instructions under ` SSH Private Key & Instructions` section on ROLE lab page to access your lab over ssh.
+* Refer to the instructions under `SSH Private Key & Instructions` section on ROLE lab page to access your lab over ssh.
 
 == Architecture Diagram of the Classroom Environment
 
