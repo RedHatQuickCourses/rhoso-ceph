@@ -1,6 +1,8 @@
 = Install packages
 
-Run below commands as `root` user on `cephservera`
+Run the below commands as `root` user on `cephservera`. 
+
+NOTE: Installation process is time consuming task, consider running these steps in *tmux* session to avoid loss of connectivity during installation process.
 
 . Register all your Ceph cluster nodes on Red Hat customer portal.
 +
@@ -11,14 +13,16 @@ for server in cephservera cephserverb cephserverc cephserverd cephservere; do ss
 +
 Replace `yourusername` and `yourpassword` in the above command with appropriate string.
 +
-NOTE: You may not need to execute the above steps in Red Hat training environment where local packages repository is made available.
-+
-Delete the local repository from all the servers if you are subscribing system to RedHat customer portal.
+NOTE: You may not need to execute the above steps in the Red Hat training environment where a local packages repository is made available.
+
+. Delete the local repository from all the servers if you are subscribing the system to RedHat customer portal.
 +
 [source,bash,role=execute]
 ----
 for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server rm -f /etc/yum.repos.d/rhel*; done
 ----
++
+NOTE: You may skip this step in Red Hat training environment where local packages repository is functional.
 
 . Subscribe the cluster nodes to required RHEL9 and Ceph channels.
 +
@@ -33,8 +37,6 @@ for server in cephservera cephserverb cephserverc cephserverd cephservere; do ss
 ----
 for server in cephservera cephserverb cephserverc cephserverd cephservere; do ssh $server dnf -y update; done
 ----
-+
-NOTE: Consider running the above update command in *tmux* session.
 
 . Install the packages required for Ceph storage deployment on all the cluster nodes.
 +

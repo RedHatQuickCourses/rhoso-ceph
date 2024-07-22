@@ -1,6 +1,19 @@
 = Verify RHOSO Ceph integration setup
 
-. Verify the dataplane deployment by launching instance
+. Access `openstackclient`  shell.
++
+[source,bash,role=execute]
+----
+oc rsh openstackclient
+----
++
+.Sample output
+----
+[lab@utility rht]$ oc rsh openstackclient
+sh-5.1$ 
+----
+
+. Verify the dataplane deployment by launching instance by executing below commands in openstackshell
 +
 [source,bash,role=execute]
 ----

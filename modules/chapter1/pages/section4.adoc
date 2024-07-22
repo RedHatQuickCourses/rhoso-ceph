@@ -1,6 +1,6 @@
 = Deploy the Ceph storage cluster
 
-. Run below command to bootstrap your Ceph Storage Cluster.
+. Run the below command to bootstrap your Ceph Storage Cluster.
 +
 [source,bash,role=execute]
 ----
@@ -60,4 +60,4 @@ For more information see:
 Bootstrap complete.
 ----
 
-NOTE: You may have to wait for approximately 5 to 10 minutes for all background processes for installation to complete and the cluster to be in *HEALTH_OK* state. You may track the progress with *watch caph -s* command.
+NOTE: You may have to wait for approximately 5 to 10 minutes for all the background processes needed for installation to complete and the cluster to be in *HEALTH_OK* state. You may track the progress with *watch caph -s* command.

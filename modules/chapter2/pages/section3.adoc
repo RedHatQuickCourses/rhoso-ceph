@@ -69,6 +69,19 @@ ceph.client.openstack.keyring                                                   
 ----
 
 . Exit from the `cephservera` ssh session to get back to the `utility` vm.
++
+[source,bash,role=execute]
+----
+exit
+----
++
+.Sample output
+----
+[root@cephservera ~]# exit
+logout
+Connection to cephservera closed.
+[lab@utility rht]$ 
+----
 
 . On `utility` vm, copy the ceph configuration and keyring files from /tmp/ directory to `/etc/ceph/` directory.
 +

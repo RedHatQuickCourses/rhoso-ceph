@@ -36,6 +36,8 @@ sudo chown lab:lab /tmp/config
 sudo su - lab
 ----
 +
+Provide the password for student user as `student` when prompted.
++
 .Sample Output
 ----
 [student@utility ~]$ cp /home/student/.ssh/config /tmp/
@@ -45,8 +47,6 @@ sudo su - lab
 Last login: Fri Jul 12 11:55:44 EDT 2024 on pts/1
 [lab@utility ~]$ 
 ----
-+
-When prompted, provide the password for student user as `student`
 +
 [source,bash,role=execute]
 ----

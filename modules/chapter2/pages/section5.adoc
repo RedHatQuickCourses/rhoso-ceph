@@ -34,7 +34,7 @@ ssh lab@utility
 +
 [source,bash,role=execute]
 ----
-[lab@utility ~]$ scp /tmp/ceph-external-cluster-details-exporter.py root@cephservera:
+scp /tmp/ceph-external-cluster-details-exporter.py root@cephservera:
 ----
 
 . Login to `cephservera` as `root` user.

@@ -23,15 +23,15 @@ The PTL team acknowledges the valuable contributions of the following Red Hat as
 
 == Classroom Environment for Red Hat Associates
 
-Continue using the https://link-to-be-added.com[HOL013] lab on RedHat Online Learning (ROLE) platform for hands-on activity for this course.
-FIXME: the link will bee added when available.
+Continue using the https://role.rhu.redhat.com/rol-rhu/app/courses/hol013-18.0/pages/pr01[HOL013] lab on RedHat Online Learning (ROLE) platform for hands-on activity for this course.
 
-FIXME: below instructions will be modified soon...
+* On the `Lab Environment` tab click `Create` button to provision the lab.
+* Wait for the lab to get started and be in up and running state.
+* Refer to the instructions under ` SSH Private Key & Instructions` section on ROLE lab page to access your lab over ssh.
 
-* Click on `Order` button for `Red Hat OpenStack Services on OpenShift Dev Preview` catalog.
-* Under `Activity` option select `Practice / Enablement`
-* In the `Purpose` drop down box, select `Learning about the product`
-* Leave all other options at default and click on `Order` button at bottom of the page.
+== Architecture Diagram of the Classroom Environment
+
+image::rhoso-ceph.png[]
 
 == Prerequisites
 

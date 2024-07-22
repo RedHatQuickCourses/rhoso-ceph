@@ -1,7 +1,7 @@
 = Create storage pool
 
 On this page, we are going to create a storage pool on the ceph cluster and mount it on the client.
-We are using the utility VM as client to test and verify the ceph storage cluster functionality.
+We are using the utility VM as a client to test and verify the ceph storage cluster functionality.
 
 . Exit from the shell session on `cephservera` and login to `utility` VM as root user.
 
@@ -49,7 +49,7 @@ rbd pool init test_pool
 +
 Above command sets the application type for the pool to `rbd`.
 
-. List the pools to verify `test_pool` is created.
+. List the pools to verify that `test_pool` is created.
 +
 [source,bash,role=execute]
 ----
