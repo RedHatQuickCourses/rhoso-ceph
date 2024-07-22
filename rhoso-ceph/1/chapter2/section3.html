@@ -238,6 +238,20 @@ ceph.client.openstack.keyring                                                   
 </li>
 <li>
 <p>Exit from the <code>cephservera</code> ssh session to get back to the <code>utility</code> vm.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">exit</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>[root@cephservera ~]# exit
+logout
+Connection to cephservera closed.
+[lab@utility rht]$</pre>
+</div>
+</div>
 </li>
 <li>
 <p>On <code>utility</code> vm, copy the ceph configuration and keyring files from /tmp/ directory to <code>/etc/ceph/</code> directory.</p>
