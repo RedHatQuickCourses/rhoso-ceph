@@ -4,10 +4,10 @@
 Welcome to this quick course on _Red Hat Ceph Storage Cluster Installation and Integration with Red Hat OpenStack 18_.
 
 Red Hat OpenStack Services on OpenShift (RHOSO) is the next generation of Red Hat OpenStack Platform.
-Click https://www.redhat.com/en/blog/red-hat-openstack-services-openshift-next-generation-red-hat-openstack-platform[here] for more information.
+Click https://www.redhat.com/en/blog/red-hat-openstack-services-openshift-next-generation-red-hat-openstack-platform[here,window=_blank] for more information.
 
 Red Hat Ceph Storage is a software-defined storage platform engineered for private cloud architectures.
-Click https://www.redhat.com/en/technologies/storage/ceph[here] for more information.
+Click https://www.redhat.com/en/technologies/storage/ceph[here,window=_blank] for more information.
 
 
 This course covers step-by-step instructions for deployment of a stand alone Ceph storage cluster. 
@@ -23,7 +23,7 @@ The PTL team acknowledges the valuable contributions of the following Red Hat as
 
 == Classroom Environment for Red Hat Associates
 
-Continue using the https://role.rhu.redhat.com/rol-rhu/app/courses/hol013-18.0/pages/pr01[HOL013] lab on RedHat Online Learning (ROLE) platform for hands-on activity for this course.
+Continue using the https://role.rhu.redhat.com/rol-rhu/app/courses/hol013-18.0/pages/pr01[HOL013,window=_blank] lab on RedHat Online Learning (ROLE) platform for hands-on activity for this course.
 
 * On the `Lab Environment` tab click `Create` button to provision the lab.
 * Wait for the lab to get started and be in up and running state.
