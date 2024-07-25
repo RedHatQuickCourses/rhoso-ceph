@@ -10,8 +10,8 @@ Red Hat Ceph Storage is a software-defined storage platform engineered for priva
 Click https://www.redhat.com/en/technologies/storage/ceph[here,window=_blank] for more information.
 
 
-This course covers step-by-step instructions for deployment of a stand alone Ceph storage cluster. 
-It also covers the hands-on lab for integration of external Ceph storage cluster with existing RHOSP18 deployment.
+This course covers step-by-step instructions for deployment of a standalone Ceph storage cluster. 
+It also covers the hands-on lab for integration of an external Ceph storage cluster with existing RHOSP18 deployment.
 
 
 == Authors
@@ -43,7 +43,7 @@ image::rhoso-ceph.png[]
 
 == Objectives
 
-* Deploy Red Hat Ceph Storage (RHCS) Cluster.
-* Configure a client system to use disk exported from the RHCS cluster.
+* Deploy a Red Hat Ceph Storage (RHCS) Cluster.
+* Configure a client system to use a disk exported from the RHCS cluster.
 * Configure an RHOSP18 deployment to use RHCS cluster.
-* Verify the installation and integration of RHOSP and Ceph cluster.
+* Verify the installation and integration of RHOSP and the Ceph cluster.

@@ -60,7 +60,7 @@ watch opensdtack server list
 
 .. You may look for the root cause by searching for the instance uuid in logs.
 +
-NOTE: A common failure observed in this lab is due to selinux preventing deletion of instance's console.log file. FIXME: avoid this
+NOTE: A common failure observed in this lab is due to selinux preventing deletion of instance's console.log file.
 +
 .Sample output
 ----
